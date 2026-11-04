@@ -22,8 +22,8 @@ The workflow builds a temporary kind cluster and registry, publishes the sample 
 that the cluster enforces the guardrails, runs the test, and deletes everything. The job fails
 unless the load test passes.
 
-A previous successful run: [load-test #41889958641](https://github.com/sockyone/interview-geocomply/actions/runs/41889958641)
-(run `lt-checkout-ee200eb9`). Its output has the same layout as the local run captured in
+A previous successful run: [load-test #41891664436](https://github.com/sockyone/interview-geocomply/actions/runs/41891664436)
+(run `lt-checkout-eb77105a`). Its output has the same layout as the local run captured in
 [example-output/](example-output/README.md). Job summaries cannot display images from artifacts,
 so the dashboard is in the artifact rather than inline in the summary.
 
