@@ -8,7 +8,26 @@ with resource and network guardrails enforced by Kubernetes.
 - Design, decisions and trade-offs: [WRITEUP.md](WRITEUP.md)
 - How AI was used: [AI-USAGE.md](AI-USAGE.md)
 
-## Prerequisites
+## Try it without installing anything: GitHub Actions
+
+You can run the whole thing on a GitHub runner, with no local setup:
+
+1. Fork or open the repository on GitHub, then go to **Actions → load-test → Run workflow**.
+2. Keep the default version (`0.3.0`) and start it. It takes about 5 minutes.
+3. Open the finished run: the **job summary** shows the report (pass/fail, thresholds, stages,
+   per-journey latency, resource peaks), and the **`load-test-evidence`** artifact holds everything
+   the run produced, including `dashboard.png`, logs and metrics (kept 14 days).
+
+The workflow builds a temporary kind cluster and registry, publishes the sample artifacts, checks
+that the cluster enforces the guardrails, runs the test, and deletes everything. The job fails
+unless the load test passes.
+
+A previous successful run: [load-test #41889958641](https://github.com/sockyone/interview-geocomply/actions/runs/41889958641)
+(run `lt-checkout-ee200eb9`). Its output has the same layout as the local run captured in
+[example-output/](example-output/README.md). Job summaries cannot display images from artifacts,
+so the dashboard is in the artifact rather than inline in the summary.
+
+## Prerequisites (to run locally)
 
 | Tool | Version | Notes |
 | --- | --- | --- |
@@ -149,11 +168,10 @@ samples, including a CSV), `guardrails.json`, `resolved/` (every artifact pinned
 
 ## Run it in CI
 
-[`.github/workflows/load-test.yml`](.github/workflows/load-test.yml) (manual dispatch) does the
-same on a GitHub runner: creates a temporary kind cluster and registry, publishes, checks that the
-cluster enforces the guardrails, runs the test, puts the report in the job summary, uploads the
-evidence even on failure, and deletes everything. [`checks.yml`](.github/workflows/checks.yml)
-runs the unit tests on every pull request.
+[`.github/workflows/load-test.yml`](.github/workflows/load-test.yml) (manual dispatch) is the
+workflow described [at the top](#try-it-without-installing-anything-github-actions); it puts the
+report in the job summary and uploads the evidence even on failure.
+[`checks.yml`](.github/workflows/checks.yml) runs the unit tests on every pull request.
 
 ## Repository layout
 

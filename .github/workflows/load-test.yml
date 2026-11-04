@@ -71,14 +71,6 @@ jobs:
             --runs-dir .runtime/runs
           echo "exit_code=$?" >> "$GITHUB_OUTPUT"
 
-      - name: Publish the report to the workflow summary
-        if: always()
-        run: |
-          for report in .runtime/runs/lt-*/report.md; do
-            [ -f "$report" ] && cat "$report" >> "$GITHUB_STEP_SUMMARY"
-          done
-          true
-
       - name: Upload evidence
         id: evidence
         if: always()
@@ -91,12 +83,21 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Link the evidence in the workflow summary
+      - name: Publish the report to the workflow summary
         if: always()
+        env:
+          EVIDENCE_URL: ${{ steps.evidence.outputs.artifact-url }}
         run: |
+          # report.md embeds dashboard.png by relative path, which a job summary cannot resolve
+          # (it would render as a broken image). Point at the uploaded evidence instead.
+          for report in .runtime/runs/lt-*/report.md; do
+            [ -f "$report" ] || continue
+            sed -E "s|^!\[Dashboard for ([^]]+)\]\(dashboard\.png\)|**Dashboard for \1:** \`dashboard.png\` is in the [load-test-evidence artifact]($EVIDENCE_URL) (job summaries cannot show images from artifacts).|" \
+              "$report" >> "$GITHUB_STEP_SUMMARY"
+          done
           {
             echo ""
-            echo "**Evidence (run record, TestResult, logs, metrics):** [download load-test-evidence](${{ steps.evidence.outputs.artifact-url }})"
+            echo "**Evidence (run record, TestResult, logs, metrics, dashboard.png):** [download load-test-evidence]($EVIDENCE_URL)"
             echo "Exit code: \`${{ steps.test.outputs.exit_code || 'not produced' }}\`"
           } >> "$GITHUB_STEP_SUMMARY"
 
