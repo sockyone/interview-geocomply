@@ -1,0 +1,325 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "generateName": "database-seed-",
+                "generation": 1,
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "batch.kubernetes.io/job-name": "database-seed",
+                    "controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "job-name": "database-seed",
+                    "perf-runner/role": "seed",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Job",
+                        "name": "database-seed",
+                        "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+                    }
+                ],
+                "resourceVersion": "391593",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                    {
+                        "command": [
+                            "python",
+                            "-m",
+                            "checkout.database",
+                            "--seed-file",
+                            "fixtures/products.csv"
+                        ],
+                        "env": [
+                            {
+                                "name": "DATABASE_URL",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "key": "url",
+                                        "name": "database-credentials"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "seed",
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "initContainers": [
+                    {
+                        "command": [
+                            "python",
+                            "-c",
+                            "import os,socket,time\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        socket.create_connection((os.environ['DB_HOST'], int(os.environ['DB_PORT'])), 1).close()\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "DB_HOST",
+                                "value": "database"
+                            },
+                            {
+                                "name": "DB_PORT",
+                                "value": "5432"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "wait-for-database",
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Never",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 5,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "50m",
+                    "memory": "64Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:40Z",
+                        "message": "pod sandbox is not ready",
+                        "observedGeneration": 1,
+                        "reason": "PodSandboxNotReady",
+                        "status": "False",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:38Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:39Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:39Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:37Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        },
+                        "containerID": "containerd://687528fa9b6b3caa48f056c3978531b813a7bf33117112d8d2cc4fe82d5ca8d2",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "seed",
+                        "ready": false,
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://687528fa9b6b3caa48f056c3978531b813a7bf33117112d8d2cc4fe82d5ca8d2",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:51:39Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:38Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "initContainerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        },
+                        "containerID": "containerd://7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "wait-for-database",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:51:38Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:38Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        }
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Succeeded",
+                "podIP": "10.244.0.53",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.53"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "limits": {
+                        "cpu": "500m",
+                        "memory": "256Mi"
+                    },
+                    "requests": {
+                        "cpu": "28m",
+                        "memory": "64Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:37Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

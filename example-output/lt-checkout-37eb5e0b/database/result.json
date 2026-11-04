@@ -1,0 +1,46 @@
+{
+  "run_id": "lt-checkout-37eb5e0b",
+  "namespace": "lt-checkout-37eb5e0b",
+  "started_at": "2026-11-04T17:51:36.230333+00:00",
+  "state": "succeeded",
+  "phase": "seed",
+  "engine": {
+    "type": "postgres",
+    "version": "17.6",
+    "image": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b"
+  },
+  "seedImage": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+  "seed": {
+    "job": "database-seed",
+    "started_at": "2026-11-04T17:51:37.887637+00:00",
+    "finished_at": "2026-11-04T17:51:41.122949+00:00",
+    "state": "complete",
+    "log_path": ".runtime/runs/lt-checkout-37eb5e0b/database/seed/seed.log",
+    "reason": "CompletionsReached",
+    "collectionErrors": []
+  },
+  "outputs": {
+    "host": "database.lt-checkout-37eb5e0b.svc.cluster.local",
+    "port": 5432,
+    "database": "checkout",
+    "user": "user_37cd45314017d385",
+    "password_secret": {
+      "namespace": "lt-checkout-37eb5e0b",
+      "name": "database-credentials",
+      "key": "password"
+    },
+    "url_secret": {
+      "namespace": "lt-checkout-37eb5e0b",
+      "name": "database-credentials",
+      "key": "url"
+    },
+    "seed": {
+      "job": "database-seed",
+      "started_at": "2026-11-04T17:51:37.887637+00:00",
+      "finished_at": "2026-11-04T17:51:41.122949+00:00",
+      "state": "complete",
+      "log_path": ".runtime/runs/lt-checkout-37eb5e0b/database/seed/seed.log"
+    }
+  },
+  "finished_at": "2026-11-04T17:51:41.123177+00:00"
+}

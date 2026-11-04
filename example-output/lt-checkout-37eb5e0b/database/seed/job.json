@@ -1,0 +1,172 @@
+{
+    "apiVersion": "batch/v1",
+    "kind": "Job",
+    "metadata": {
+        "creationTimestamp": "2026-11-04T17:51:37Z",
+        "generation": 1,
+        "labels": {
+            "perf-runner/role": "seed",
+            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+        },
+        "name": "database-seed",
+        "namespace": "lt-checkout-37eb5e0b",
+        "resourceVersion": "391594",
+        "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+    },
+    "spec": {
+        "activeDeadlineSeconds": 60,
+        "backoffLimit": 0,
+        "completionMode": "NonIndexed",
+        "completions": 1,
+        "manualSelector": false,
+        "parallelism": 1,
+        "podReplacementPolicy": "TerminatingOrFailed",
+        "selector": {
+            "matchLabels": {
+                "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+            }
+        },
+        "suspend": false,
+        "template": {
+            "metadata": {
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "batch.kubernetes.io/job-name": "database-seed",
+                    "controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "job-name": "database-seed",
+                    "perf-runner/role": "seed",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                }
+            },
+            "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                    {
+                        "command": [
+                            "python",
+                            "-m",
+                            "checkout.database",
+                            "--seed-file",
+                            "fixtures/products.csv"
+                        ],
+                        "env": [
+                            {
+                                "name": "DATABASE_URL",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "key": "url",
+                                        "name": "database-credentials"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "seed",
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "initContainers": [
+                    {
+                        "command": [
+                            "python",
+                            "-c",
+                            "import os,socket,time\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        socket.create_connection((os.environ['DB_HOST'], int(os.environ['DB_PORT'])), 1).close()\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "DB_HOST",
+                                "value": "database"
+                            },
+                            {
+                                "name": "DB_PORT",
+                                "value": "5432"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "wait-for-database",
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "restartPolicy": "Never",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "terminationGracePeriodSeconds": 5
+            }
+        }
+    },
+    "status": {
+        "completionTime": "2026-11-04T17:51:41Z",
+        "conditions": [
+            {
+                "lastProbeTime": "2026-11-04T17:51:41Z",
+                "lastTransitionTime": "2026-11-04T17:51:41Z",
+                "message": "Reached expected number of succeeded pods",
+                "reason": "CompletionsReached",
+                "status": "True",
+                "type": "SuccessCriteriaMet"
+            },
+            {
+                "lastProbeTime": "2026-11-04T17:51:41Z",
+                "lastTransitionTime": "2026-11-04T17:51:41Z",
+                "message": "Reached expected number of succeeded pods",
+                "reason": "CompletionsReached",
+                "status": "True",
+                "type": "Complete"
+            }
+        ],
+        "ready": 0,
+        "startTime": "2026-11-04T17:51:37Z",
+        "succeeded": 1,
+        "terminating": 0,
+        "uncountedTerminatedPods": {}
+    }
+}

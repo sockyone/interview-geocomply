@@ -1,0 +1,14 @@
+{
+  "apiVersion": "v1",
+  "kind": "ConfigMap",
+  "immutable": true,
+  "metadata": {
+    "name": "load-profile",
+    "labels": {
+      "perf-runner/run-id": "lt-checkout-37eb5e0b"
+    }
+  },
+  "data": {
+    "profile.yaml": "{\n  \"apiVersion\": \"perf-runner/v1alpha1\",\n  \"kind\": \"LoadProfile\",\n  \"metadata\": {\n    \"name\": \"checkout\"\n  },\n  \"spec\": {\n    \"model\": \"closed-users\",\n    \"flow\": [\n      {\n        \"journey\": \"browse\",\n        \"repeat\": 3\n      },\n      {\n        \"waitSeconds\": 2\n      },\n      {\n        \"journey\": \"purchase\"\n      }\n    ],\n    \"spawnRate\": 5,\n    \"drainTimeoutSeconds\": 5,\n    \"stages\": [\n      {\n        \"name\": \"ramp-up\",\n        \"transition\": \"ramp\",\n        \"durationSeconds\": 10,\n        \"users\": 10,\n        \"measure\": false\n      },\n      {\n        \"name\": \"steady\",\n        \"transition\": \"hold\",\n        \"durationSeconds\": 30,\n        \"users\": 10,\n        \"measure\": true\n      }\n    ],\n    \"thresholds\": [\n      {\n        \"scope\": \"measured\",\n        \"metric\": \"journeyP95Ms\",\n        \"max\": 2000\n      },\n      {\n        \"scope\": \"steady\",\n        \"metric\": \"journeyFailureRatio\",\n        \"max\": 0\n      },\n      {\n        \"scope\": \"measured\",\n        \"metric\": \"httpFailureRatio\",\n        \"max\": 0\n      }\n    ]\n  }\n}"
+  }
+}

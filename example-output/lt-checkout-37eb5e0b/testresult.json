@@ -1,0 +1,441 @@
+{
+  "apiVersion": "perf-runner/v1alpha1",
+  "kind": "TestResult",
+  "runId": "lt-checkout-37eb5e0b",
+  "definition": "checkout",
+  "status": "passed",
+  "exitCode": 0,
+  "outcome": {
+    "test": "passed",
+    "execution": "completed",
+    "performance": "passed",
+    "collection": "ok",
+    "cleanup": "ok"
+  },
+  "timestamps": {
+    "runStartedAt": "2026-11-04T17:51:35.443320+00:00",
+    "runFinishedAt": "2026-11-04T17:52:45.747836+00:00",
+    "suiteStartedAt": "2026-11-04T17:51:46.214492+00:00",
+    "suiteFinishedAt": "2026-11-04T17:52:26.178904+00:00"
+  },
+  "artifacts": {
+    "applicationDefinition": {
+      "requested": "localhost:5001/performance/applications/checkout:latest",
+      "resolved": "localhost:5001/performance/applications/checkout@sha256:d14c0e2589d992e645c736419e1d505b837fbea4ef5c57aafa29cfaf1115680d",
+      "contentSha256": "sha256:d323242f009c8444f652bc0b4aa7c170c250be61c54656cf1fb83fb0fa1036cd"
+    },
+    "chart": {
+      "requested": "localhost:5001/performance/charts/http-service:0.1.0",
+      "resolved": "localhost:5001/performance/charts/http-service@sha256:3b049d3ac60e04aaed650c1b13a723b6f8d352bd893e75797d42d91d5b57fc4d",
+      "contentSha256": "sha256:9651cbf68d3d2acbd99cbca983e49897908e0a47205570c7fb00dc77e771693e"
+    },
+    "application": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "database": {
+      "requested": "localhost:5001/performance/postgres:17.6",
+      "resolved": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b"
+    },
+    "setup": {
+      "requested": "application image",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "service.payments": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "suiteRuntime": {
+      "requested": "localhost:5001/performance/python-suite:0.3.0",
+      "resolved": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36"
+    },
+    "scripts": {
+      "requested": "localhost:5001/performance/suites/checkout:latest",
+      "resolved": "localhost:5001/performance/suites/checkout@sha256:05b5a30560a252821d85f1f2a34dbdb1bf6fcee37ea2ac86418f7739f631c3db",
+      "contentSha256": "sha256:fd913336385c9e08d215e696a4364b0125115c34d01160e4b244e16e6a2103e6",
+      "scriptBundleSha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70"
+    }
+  },
+  "engine": {
+    "name": "locust",
+    "version": "2.46.6",
+    "loadModel": "closed-users"
+  },
+  "resolvedProfile": {
+    "apiVersion": "perf-runner/v1alpha1",
+    "kind": "LoadProfile",
+    "metadata": {
+      "name": "checkout"
+    },
+    "spec": {
+      "model": "closed-users",
+      "flow": [
+        {
+          "journey": "browse",
+          "repeat": 3
+        },
+        {
+          "waitSeconds": 2
+        },
+        {
+          "journey": "purchase"
+        }
+      ],
+      "spawnRate": 5,
+      "drainTimeoutSeconds": 5,
+      "stages": [
+        {
+          "name": "ramp-up",
+          "transition": "ramp",
+          "durationSeconds": 10,
+          "users": 10,
+          "measure": false
+        },
+        {
+          "name": "steady",
+          "transition": "hold",
+          "durationSeconds": 30,
+          "users": 10,
+          "measure": true
+        }
+      ],
+      "thresholds": [
+        {
+          "scope": "measured",
+          "metric": "journeyP95Ms",
+          "max": 2000
+        },
+        {
+          "scope": "steady",
+          "metric": "journeyFailureRatio",
+          "max": 0
+        },
+        {
+          "scope": "measured",
+          "metric": "httpFailureRatio",
+          "max": 0
+        }
+      ]
+    }
+  },
+  "stages": [
+    {
+      "name": "ramp-up",
+      "transition": "ramp",
+      "durationSeconds": 10,
+      "users": 10,
+      "measured": false,
+      "startedAt": "2026-11-04T17:51:46.215631+00:00",
+      "finishedAt": "2026-11-04T17:51:56.261460+00:00",
+      "reachedTarget": true,
+      "journey": {
+        "samples": 118,
+        "failures": 0,
+        "timingMs": {
+          "samples": 118,
+          "p50": 7,
+          "p95": 87,
+          "p99": 110,
+          "max": 132.75518384762108
+        }
+      },
+      "http": {
+        "samples": 184,
+        "failures": 0,
+        "timingMs": {
+          "samples": 184,
+          "p50": 7,
+          "p95": 60,
+          "p99": 67,
+          "max": 85.87551885284483
+        }
+      }
+    },
+    {
+      "name": "steady",
+      "transition": "hold",
+      "durationSeconds": 30,
+      "users": 10,
+      "measured": true,
+      "startedAt": "2026-11-04T17:51:56.261484+00:00",
+      "finishedAt": "2026-11-04T17:52:26.132422+00:00",
+      "reachedTarget": true,
+      "journey": {
+        "samples": 560,
+        "failures": 0,
+        "timingMs": {
+          "samples": 560,
+          "p50": 8,
+          "p95": 110,
+          "p99": 170,
+          "max": 187.75888509117067
+        }
+      },
+      "http": {
+        "samples": 980,
+        "failures": 0,
+        "timingMs": {
+          "samples": 980,
+          "p50": 8,
+          "p95": 63,
+          "p99": 74,
+          "max": 111.13883904181421
+        }
+      }
+    }
+  ],
+  "measured": {
+    "journey": {
+      "samples": 560,
+      "failures": 0,
+      "timingMs": {
+        "samples": 560,
+        "p50": 8,
+        "p95": 110,
+        "p99": 170,
+        "max": 187.75888509117067
+      }
+    },
+    "http": {
+      "samples": 980,
+      "failures": 0,
+      "timingMs": {
+        "samples": 980,
+        "p50": 8,
+        "p95": 63,
+        "p99": 74,
+        "max": 111.13883904181421
+      }
+    }
+  },
+  "thresholds": [
+    {
+      "scope": "measured",
+      "metric": "journeyP95Ms",
+      "max": 2000,
+      "samples": 560,
+      "actual": 110,
+      "outcome": "passed"
+    },
+    {
+      "scope": "steady",
+      "metric": "journeyFailureRatio",
+      "max": 0,
+      "samples": 560,
+      "actual": 0.0,
+      "outcome": "passed"
+    },
+    {
+      "scope": "measured",
+      "metric": "httpFailureRatio",
+      "max": 0,
+      "samples": 980,
+      "actual": 0.0,
+      "outcome": "passed"
+    }
+  ],
+  "journeys": {
+    "browse": {
+      "attempted": 516,
+      "passed": 516,
+      "failed": 0,
+      "interrupted": 0,
+      "timingMs": {
+        "samples": 516,
+        "p50": 6,
+        "p95": 21,
+        "p99": 27,
+        "max": 34.30247609503567
+      }
+    },
+    "purchase": {
+      "attempted": 162,
+      "passed": 162,
+      "failed": 0,
+      "interrupted": 0,
+      "timingMs": {
+        "samples": 162,
+        "p50": 85,
+        "p95": 130,
+        "p99": 180,
+        "max": 187.75888509117067
+      }
+    }
+  },
+  "http": [
+    {
+      "method": "POST",
+      "name": "/orders",
+      "requests": 162,
+      "failures": 0,
+      "timingMs": {
+        "samples": 162,
+        "p50": 9,
+        "p95": 28,
+        "p99": 53,
+        "max": 62.650252133607864
+      }
+    },
+    {
+      "method": "GET",
+      "name": "/orders/{id}",
+      "requests": 162,
+      "failures": 0,
+      "timingMs": {
+        "samples": 162,
+        "p50": 7,
+        "p95": 17,
+        "p99": 23,
+        "max": 29.223223915323615
+      }
+    },
+    {
+      "method": "PATCH",
+      "name": "/orders/{id}",
+      "requests": 162,
+      "failures": 0,
+      "timingMs": {
+        "samples": 162,
+        "p50": 8,
+        "p95": 23,
+        "p99": 46,
+        "max": 61.78267393261194
+      }
+    },
+    {
+      "method": "POST",
+      "name": "/orders/{id}/checkout",
+      "requests": 162,
+      "failures": 0,
+      "timingMs": {
+        "samples": 162,
+        "p50": 60,
+        "p95": 75,
+        "p99": 96,
+        "max": 111.13883904181421
+      }
+    },
+    {
+      "method": "GET",
+      "name": "/products/{id}",
+      "requests": 516,
+      "failures": 0,
+      "timingMs": {
+        "samples": 516,
+        "p50": 6,
+        "p95": 21,
+        "p99": 27,
+        "max": 34.24359089694917
+      }
+    }
+  ],
+  "executionErrors": [],
+  "generatorWarnings": [],
+  "resourceUsage": {
+    "available": true,
+    "source": "prometheus",
+    "window": {
+      "start": "2026-11-05T00:51:35.946424+07:00",
+      "end": "2026-11-05T00:52:45.620578+07:00"
+    },
+    "namespace": "lt-checkout-37eb5e0b",
+    "roles": {
+      "application": {
+        "pods": [
+          "application-http-service-b5cf75d4d-hkg69"
+        ],
+        "cpuCores": {
+          "samples": 3,
+          "peak": 0.10623072080688661,
+          "mean": 0.09487489549033357
+        },
+        "memoryBytes": {
+          "samples": 4,
+          "peak": 78327808.0,
+          "mean": 60684288.0
+        }
+      },
+      "database": {
+        "pods": [
+          "database-6b95dc4648-gfjqz"
+        ],
+        "cpuCores": {
+          "samples": 3,
+          "peak": 0.10230144220805348,
+          "mean": 0.08961105376383825
+        },
+        "memoryBytes": {
+          "samples": 4,
+          "peak": 26931200.0,
+          "mean": 19493888.0
+        }
+      },
+      "generator": {
+        "pods": [
+          "suite-fx4c4"
+        ],
+        "cpuCores": {
+          "samples": 2,
+          "peak": 0.03328702754555666,
+          "mean": 0.029658077458187118
+        },
+        "memoryBytes": {
+          "samples": 3,
+          "peak": 43261952.0,
+          "mean": 33812480.0
+        }
+      },
+      "seed": {
+        "pods": [
+          "database-seed-7hcn7"
+        ],
+        "cpuCores": null,
+        "memoryBytes": {
+          "samples": 1,
+          "peak": 3117056.0,
+          "mean": 3117056.0
+        }
+      },
+      "service:payments": {
+        "pods": [
+          "payments-http-service-b4c857bdd-fpqqg"
+        ],
+        "cpuCores": {
+          "samples": 2,
+          "peak": 0.016066185871168037,
+          "mean": 0.010761480723023954
+        },
+        "memoryBytes": {
+          "samples": 3,
+          "peak": 55427072.0,
+          "mean": 42145109.333333336
+        }
+      }
+    },
+    "missingRoles": [],
+    "notes": [
+      "CPU is the rate between consecutive samples (cAdvisor refreshes about every 15 s); memory is working set. Values are totals across a role's containers.",
+      "Pods shorter than one scrape interval, and the final seconds before export, may have no samples."
+    ]
+  },
+  "errors": [],
+  "limitations": [
+    "CPU unavailable for seed: a rate needs two scrapes and these Pods lived too briefly; memory had a single sample. Use a longer profile for CPU evidence."
+  ],
+  "evidence": {
+    "progress": "progress.log",
+    "progressEvents": "events.jsonl",
+    "record": "run.json",
+    "resolvedSnapshot": "resolved/resolved.json",
+    "suiteResult": "suite/result.json",
+    "suiteLog": "suite/suite.log",
+    "suiteJob": "suite/job.json",
+    "databaseRecord": "database/result.json",
+    "seedLog": "database/seed/seed.log",
+    "diagnostics": "diagnostics",
+    "resourceUsage": "metrics/resource-usage.json",
+    "resourceSeries": "metrics/series.json",
+    "resourceCsv": "metrics/resource-usage.csv",
+    "dashboard": "dashboard.png"
+  }
+}

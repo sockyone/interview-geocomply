@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "perf-runner"
+version = "0.1.0"
+description = "Python lifecycle steps for isolated performance tests"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3", "jsonschema==4.25.1"]
+
+[project.scripts]
+loadtest = "perf_runner.cli:main"
+
+[project.optional-dependencies]
+charts = ["matplotlib==3.11.2"]
+
+[tool.setuptools.packages.find]
+where = ["src", "runner"]
+include = ["perf_runner*", "suite_runtime*"]
+
+[tool.setuptools.package-data]
+perf_runner = ["schemas/*.json"]

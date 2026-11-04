@@ -1,0 +1,147 @@
+{
+  "apiVersion": "batch/v1",
+  "kind": "Job",
+  "metadata": {
+    "name": "suite",
+    "labels": {
+      "perf-runner/run-id": "lt-checkout-37eb5e0b",
+      "perf-runner/role": "suite"
+    }
+  },
+  "spec": {
+    "backoffLimit": 0,
+    "activeDeadlineSeconds": 115,
+    "template": {
+      "metadata": {
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "perf-runner/role": "suite"
+        }
+      },
+      "spec": {
+        "restartPolicy": "Never",
+        "automountServiceAccountToken": false,
+        "volumes": [
+          {
+            "name": "user-flows",
+            "configMap": {
+              "name": "checkout-scripts-871a615fd5b3"
+            }
+          },
+          {
+            "name": "profile",
+            "configMap": {
+              "name": "load-profile"
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "wait-for-application",
+            "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+            "imagePullPolicy": "IfNotPresent",
+            "command": [
+              "python",
+              "-c",
+              "import os,time,urllib.request\nurl = os.environ['READY_URL']\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        with urllib.request.urlopen(url, timeout=1) as response:\n            assert response.status == 200\n        break\n    except OSError:\n        if time.monotonic() >= deadline:\n            raise\n        time.sleep(.2)\n"
+            ],
+            "env": [
+              {
+                "name": "READY_URL",
+                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080/readyz"
+              }
+            ],
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "runAsNonRoot": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "resources": {
+              "requests": {
+                "cpu": "50m",
+                "memory": "64Mi"
+              },
+              "limits": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "suite",
+            "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+            "imagePullPolicy": "IfNotPresent",
+            "args": [
+              "--suite",
+              "/suite-input/suite.yaml",
+              "--profile",
+              "/profile/profile.yaml",
+              "--result",
+              "/results/result.json",
+              "--print-result",
+              "--request-timeout",
+              "3"
+            ],
+            "env": [
+              {
+                "name": "BASE_URL",
+                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+              },
+              {
+                "name": "RUN_ID",
+                "value": "lt-checkout-37eb5e0b"
+              },
+              {
+                "name": "PERF_RUN_PROGRESS",
+                "value": "1"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "name": "user-flows",
+                "mountPath": "/suite-input",
+                "readOnly": true
+              },
+              {
+                "name": "profile",
+                "mountPath": "/profile",
+                "readOnly": true
+              }
+            ],
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "runAsNonRoot": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "resources": {
+              "requests": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "limits": {
+                "cpu": "1",
+                "memory": "256Mi"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

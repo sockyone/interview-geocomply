@@ -1,0 +1,30 @@
+apiVersion: perf-runner/v1alpha1
+kind: ApplicationDefinition
+metadata:
+  name: checkout
+spec:
+  chart:
+    name: http-service
+    version: 0.1.0
+  values:
+    # A short name lives in the platform registry (checkout -> <registry>/checkout).
+    # Teams can also give a full reference to their own registry, e.g. ghcr.io/acme/checkout.
+    image:
+      repository: checkout
+      tag: "0.3.0"
+    port: 8080
+    service:
+      port: 8080
+    replicaCount: 1
+    probes:
+      liveness:
+        path: /healthz
+      readiness:
+        path: /readyz
+    env:
+      PAYMENT_BASE_URL: http://payments:8080
+      PAYMENT_TIMEOUT_MS: "1000"
+    secretEnv:
+      DATABASE_URL:
+        name: checkout-database
+        key: url

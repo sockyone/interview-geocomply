@@ -1,0 +1,296 @@
+{
+  "resourcePlan": {
+    "policy": {
+      "defaultRequest": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "defaultLimit": {
+        "cpu": "500m",
+        "memory": "512Mi"
+      },
+      "containerMax": {
+        "cpu": "2",
+        "memory": "2Gi"
+      },
+      "namespaceRequests": {
+        "cpu": "4",
+        "memory": "4Gi"
+      },
+      "namespaceLimits": {
+        "cpu": "8",
+        "memory": "8Gi"
+      },
+      "maxPods": 20,
+      "maxServices": 10
+    },
+    "pods": 5,
+    "totals": {
+      "requests": {
+        "cpu": "550m",
+        "memory": "704Mi"
+      },
+      "limits": {
+        "cpu": "4500m",
+        "memory": "1536Mi"
+      }
+    },
+    "components": [
+      {
+        "component": "database",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "512Mi"
+          }
+        }
+      },
+      {
+        "component": "seed",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "50m",
+            "memory": "64Mi"
+          },
+          "limits": {
+            "cpu": "500m",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "suite",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "application",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "payments",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      }
+    ]
+  },
+  "objects": [
+    {
+      "apiVersion": "v1",
+      "kind": "LimitRange",
+      "metadata": {
+        "name": "run-limits",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "limits": [
+          {
+            "type": "Container",
+            "default": {
+              "cpu": "500m",
+              "memory": "512Mi"
+            },
+            "defaultRequest": {
+              "cpu": "100m",
+              "memory": "128Mi"
+            },
+            "max": {
+              "cpu": "2",
+              "memory": "2Gi"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ResourceQuota",
+      "metadata": {
+        "name": "run-quota",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "hard": {
+          "requests.cpu": "4",
+          "requests.memory": "4Gi",
+          "limits.cpu": "8",
+          "limits.memory": "8Gi",
+          "pods": "20",
+          "services": "10",
+          "services.loadbalancers": "0",
+          "services.nodeports": "0",
+          "persistentvolumeclaims": "0"
+        }
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "name": "default-deny",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "podSelector": {},
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "name": "allow-same-namespace",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "podSelector": {},
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "podSelector": {}
+              }
+            ]
+          }
+        ],
+        "egress": [
+          {
+            "to": [
+              {
+                "podSelector": {}
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "name": "allow-dns",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "podSelector": {},
+        "policyTypes": [
+          "Egress"
+        ],
+        "egress": [
+          {
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "protocol": "UDP",
+                "port": 53
+              },
+              {
+                "protocol": "TCP",
+                "port": 53
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "name": "allow-monitoring-scrape",
+        "labels": {
+          "perf-runner/run-id": "lt-checkout-37eb5e0b",
+          "app.kubernetes.io/managed-by": "perf-runner"
+        }
+      },
+      "spec": {
+        "podSelector": {},
+        "policyTypes": [
+          "Ingress"
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "monitoring"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

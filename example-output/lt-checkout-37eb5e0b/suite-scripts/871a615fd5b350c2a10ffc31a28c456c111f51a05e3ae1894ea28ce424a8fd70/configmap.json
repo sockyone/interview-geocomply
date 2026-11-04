@@ -1,0 +1,20 @@
+{
+  "apiVersion": "v1",
+  "kind": "ConfigMap",
+  "metadata": {
+    "name": "checkout-scripts-871a615fd5b3",
+    "namespace": "lt-checkout-37eb5e0b",
+    "labels": {
+      "perf-runner/run-id": "lt-checkout-37eb5e0b"
+    },
+    "annotations": {
+      "perf-runner/scripts-sha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70"
+    }
+  },
+  "immutable": true,
+  "data": {
+    "suite.yaml": "apiVersion: perf-runner/v1alpha1\nkind: TestSuite\nmetadata:\n  name: checkout\nspec:\n  # Journeys and data only. The platform supplies the runner image and delivers these files to it.\n  fixtures: fixtures.json\n  journeys:\n    browse:\n      callable: scenarios:browse\n      description: View one product page and check its price\n    purchase:\n      callable: scenarios:purchase\n      description: Create, update, pay, and verify an order\n",
+    "scenarios.py": "\"\"\"Business journeys independent of Locust users, schedules, and deployment settings.\"\"\"\nimport random\nfrom uuid import UUID\n\n\nfrom suite_runtime import require, payload\n\n\ndef browse(context):\n    \"\"\"View one product page, picked at random from the products the test data expects.\"\"\"\n    prices = context.fixture['productPrices']\n    product_id = random.choice(sorted(prices))\n    item = payload(context.client.get(f'/products/{product_id}', name='/products/{id}'), 200)\n    require(item.get('id') == product_id and item.get('priceCents') == prices[product_id],\n            f'Product {product_id} has an unexpected id or price')\n\n\ndef purchase(context):\n    fixture = context.fixture\n    order = payload(context.client.post('/orders', name='/orders',\n        json={'productId': fixture['productId'], 'quantity': fixture['initialQuantity']}), 201)\n    order_id = order.get('id')\n    require(isinstance(order_id, str), 'Expected an order ID')\n    UUID(order_id)\n    context.record_id(order_id, namespace='order')\n    require(order.get('status') == 'draft', 'New order is not draft')\n    path = f'/orders/{order_id}'\n    updated = payload(context.client.patch(path, name='/orders/{id}',\n                      json={'quantity': fixture['finalQuantity']}), 200)\n    amount = fixture['unitPriceCents'] * fixture['finalQuantity']\n    require(updated.get('id') == order_id and updated.get('quantity') == fixture['finalQuantity']\n            and updated.get('amountCents') == amount, 'Draft update did not persist expected values')\n    paid = payload(context.client.post(path + '/checkout', name='/orders/{id}/checkout', json={}), 200)\n    require(paid.get('id') == order_id and paid.get('status') == 'paid'\n            and bool(paid.get('paymentId')) and paid.get('amountCents') == amount,\n            'Checkout response is not the expected paid order')\n    persisted = payload(context.client.get(path, name='/orders/{id}'), 200)\n    require(persisted.get('id') == order_id and persisted.get('status') == 'paid'\n            and persisted.get('quantity') == fixture['finalQuantity']\n            and persisted.get('productId') == fixture['productId']\n            and persisted.get('amountCents') == amount\n            and persisted.get('paymentId') == paid['paymentId'], 'Persisted paid order differs')\n\n",
+    "fixtures.json": "{\"productId\":\"coffee\",\"unitPriceCents\":500,\"initialQuantity\":2,\"finalQuantity\":3,\"productPrices\":{\"coffee\":500,\"tea\":300}}\n"
+  }
+}

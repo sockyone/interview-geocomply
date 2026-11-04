@@ -1,0 +1,1266 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391646",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Successfully assigned lt-checkout-37eb5e0b/application-http-service-b5cf75d4d-hkg69 to performance-test-control-plane",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d-hkg69.18e4e8f7f56943cb",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391652",
+                "uid": "9b1d4f05-bf93-408c-803b-9e3a635810c0"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391650",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Container image \"localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d-hkg69.18e4e8f80bfcf2fc",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391655",
+                "uid": "382905c5-51c4-4b02-96dc-9e76f4c6e527"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391650",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d-hkg69.18e4e8f80c76d6d1",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391657",
+                "uid": "07468ee7-3ccb-4dbc-9f26-0ef6ae22600d"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391650",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d-hkg69.18e4e8f80eef254a",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391658",
+                "uid": "a6cf5285-ab87-44b7-bd86-a4c71291c025"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391650",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.55:8080/readyz\": dial tcp 10.244.0.55:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d-hkg69.18e4e8f80f11e81f",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391659",
+                "uid": "1bd84897-a16b-4d95-8434-d0e1ed5fb0be"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "application-http-service-b5cf75d4d",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391642",
+                "uid": "2fe40bb1-f07a-4e74-964e-99c25aff41dd"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Created pod: application-http-service-b5cf75d4d-hkg69",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service-b5cf75d4d.18e4e8f7f4d2edad",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391648",
+                "uid": "9a7658de-3341-4524-ad9e-54fc79340726"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:43Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "application-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391641",
+                "uid": "18abe635-cff1-4756-8f5d-0392542e792c"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:43Z",
+            "message": "Scaled up replica set application-http-service-b5cf75d4d from 0 to 1",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "name": "application-http-service.18e4e8f7f449cc44",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391643",
+                "uid": "bf79ac58-08ff-448a-9ee7-c62ced0b7f38"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:36Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391542",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:36Z",
+            "message": "Successfully assigned lt-checkout-37eb5e0b/database-6b95dc4648-gfjqz to performance-test-control-plane",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "name": "database-6b95dc4648-gfjqz.18e4e8f663648ef7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391547",
+                "uid": "812ce5a1-be39-45bc-8010-7bb6997ea9fb"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:36Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{postgres}",
+                "kind": "Pod",
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391545",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:36Z",
+            "message": "Container image \"localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "name": "database-6b95dc4648-gfjqz.18e4e8f67ee965e8",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391551",
+                "uid": "6a067227-17f7-4fbe-939a-715c635663a4"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:37Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{postgres}",
+                "kind": "Pod",
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391545",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:37Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "name": "database-6b95dc4648-gfjqz.18e4e8f67fd0218c",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391553",
+                "uid": "e4014fe4-4036-4a5f-bf5e-f1c79436a7f9"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:37Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{postgres}",
+                "kind": "Pod",
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391545",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:37Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "name": "database-6b95dc4648-gfjqz.18e4e8f68303ad57",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391554",
+                "uid": "d5eb56d6-57bf-4d1e-a01c-17441661de23"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:37Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{postgres}",
+                "kind": "Pod",
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391545",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:37Z",
+            "message": "Readiness probe failed: 127.0.0.1:5432 - no response\n",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "name": "database-6b95dc4648-gfjqz.18e4e8f686978feb",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391558",
+                "uid": "d4544ccd-2400-4034-9961-4907b989770e"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:36Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "database-6b95dc4648",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391538",
+                "uid": "541967ba-74b0-455d-8576-a203d16d329d"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:36Z",
+            "message": "Created pod: database-6b95dc4648-gfjqz",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "name": "database-6b95dc4648.18e4e8f661cb6da2",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391544",
+                "uid": "0a2a703f-1da7-4c53-abc3-b8dde498ce99"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:37Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391566",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:37Z",
+            "message": "Successfully assigned lt-checkout-37eb5e0b/database-seed-7hcn7 to performance-test-control-plane",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "name": "database-seed-7hcn7.18e4e8f6bad95f95",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391570",
+                "uid": "9df3554d-e577-4f23-ba8c-d176dbacad7d"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-database}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container image \"localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6c04e8cb0",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391572",
+                "uid": "364c48c4-f13e-4be2-95d1-7182d6bace22"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-database}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6c0cc21b4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391574",
+                "uid": "be9eeb88-7bbf-4f45-930b-a5e9105741f1"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-database}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6c30c3216",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391575",
+                "uid": "ef0337af-ca51-48a8-ba3e-4fa384b7d783"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{seed}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container image \"localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6ee73781d",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391579",
+                "uid": "6c319ff9-345b-45cc-ab00-50b9259d1014"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{seed}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6ef49ec3f",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391581",
+                "uid": "0b77cfd5-b1cb-459c-9e7a-da6deed0bb1a"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:38Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{seed}",
+                "kind": "Pod",
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391567",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:38Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:38Z",
+                "name": "database-seed-7hcn7.18e4e8f6f457b8d7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391583",
+                "uid": "2b20d62b-94b2-4f53-96c5-a3c8e89bb413"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:37Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "database-seed",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391564",
+                "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:37Z",
+            "message": "Created pod: database-seed-7hcn7",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "name": "database-seed.18e4e8f6baa70858",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391568",
+                "uid": "8ebb860b-91ad-4f53-bcd4-0d393b116071"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "database-seed",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391592",
+                "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Job completed",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "database-seed.18e4e8f770141080",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391595",
+                "uid": "7b44d8b0-f059-45f4-aac0-c36b5a7796ba"
+            },
+            "reason": "Completed",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:36Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "database",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391535",
+                "uid": "af82fd7b-db05-4aaf-bccc-11ab4a7bd353"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:36Z",
+            "message": "Scaled up replica set database-6b95dc4648 from 0 to 1",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "name": "database.18e4e8f66043125c",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391541",
+                "uid": "cceb0d73-d718-4016-bfd2-7e5f70be31ca"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391608",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Successfully assigned lt-checkout-37eb5e0b/payments-http-service-b4c857bdd-fpqqg to performance-test-control-plane",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "payments-http-service-b4c857bdd-fpqqg.18e4e8f78b088b9d",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391614",
+                "uid": "5949a2e3-64c6-4f7d-ad41-19e2ef7d00ad"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391611",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Container image \"localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "payments-http-service-b4c857bdd-fpqqg.18e4e8f7a53e1b4c",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391617",
+                "uid": "1ef1c3a2-51e8-4d81-8a8b-9462613ab9d6"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391611",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "payments-http-service-b4c857bdd-fpqqg.18e4e8f7a5fa8bde",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391619",
+                "uid": "dc61f77e-3b4f-49b4-ba61-c813cbac81ff"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:42Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391611",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:42Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:42Z",
+                "name": "payments-http-service-b4c857bdd-fpqqg.18e4e8f7a99631d4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391620",
+                "uid": "51189505-c812-4bfa-b858-cfe1af38b730"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:42Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{application}",
+                "kind": "Pod",
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391611",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:42Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.54:8080/healthz\": dial tcp 10.244.0.54:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:42Z",
+                "name": "payments-http-service-b4c857bdd-fpqqg.18e4e8f7a9c3446c",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391621",
+                "uid": "b67ced3b-8829-4677-9d23-7aeb385c0a6a"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "payments-http-service-b4c857bdd",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391604",
+                "uid": "e0956880-34cb-4954-a221-b3ec64d18284"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Created pod: payments-http-service-b4c857bdd-fpqqg",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "payments-http-service-b4c857bdd.18e4e8f78a66401a",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391609",
+                "uid": "bb9de51e-4648-4f4d-a259-2a58e6bf142e"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:41Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "payments-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391602",
+                "uid": "55ceb46d-8e71-4670-9038-4ac303d08b1b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:41Z",
+            "message": "Scaled up replica set payments-http-service-b4c857bdd from 0 to 1",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "name": "payments-http-service.18e4e8f789990027",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391606",
+                "uid": "f64efa05-5e76-4f1f-b887-1214cfa4f2c8"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:44Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391674",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:44Z",
+            "message": "Successfully assigned lt-checkout-37eb5e0b/suite-fx4c4 to performance-test-control-plane",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "name": "suite-fx4c4.18e4e8f832a26a07",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391678",
+                "uid": "102a790e-d9c0-4951-b269-06ada711ec2b"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:44Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-application}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:44Z",
+            "message": "Container image \"localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "name": "suite-fx4c4.18e4e8f8489233ee",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391682",
+                "uid": "04677bcc-6565-40fb-95c4-8c71229a439c"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:44Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-application}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:44Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "name": "suite-fx4c4.18e4e8f8494eb916",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391684",
+                "uid": "ed572261-a572-43e3-b533-48382fd2997e"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:44Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.initContainers{wait-for-application}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:44Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "name": "suite-fx4c4.18e4e8f84bfa680b",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391685",
+                "uid": "85d62388-32f0-4fda-acb1-8bff60565002"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:45Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{suite}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:45Z",
+            "message": "Container image \"localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36\" already present on machine and can be accessed by the pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:45Z",
+                "name": "suite-fx4c4.18e4e8f891c327ae",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391688",
+                "uid": "7a56a6b2-565f-404c-8500-15ad8a8386ed"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:45Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{suite}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:45Z",
+            "message": "Container created",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:45Z",
+                "name": "suite-fx4c4.18e4e8f89313500c",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391690",
+                "uid": "3721cea6-3a03-44e4-a5c7-7ae635a9b969"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:45Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{suite}",
+                "kind": "Pod",
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391676",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:45Z",
+            "message": "Container started",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:45Z",
+                "name": "suite-fx4c4.18e4e8f89623b1d2",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391691",
+                "uid": "5996fa22-6b04-40a5-9492-40e99d89d767"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "performance-test-control-plane",
+            "source": {
+                "component": "kubelet",
+                "host": "performance-test-control-plane"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:51:44Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "suite",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391672",
+                "uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:51:44Z",
+            "message": "Created pod: suite-fx4c4",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "name": "suite.18e4e8f83264f3d9",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391675",
+                "uid": "0baf7363-89ce-4f90-88be-44a76d62ac38"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-04T17:52:28Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "suite",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391760",
+                "uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-04T17:52:28Z",
+            "message": "Job completed",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:52:29Z",
+                "name": "suite.18e4e9029af36e49",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391763",
+                "uid": "2e08913e-3e04-457e-8acc-06458d953102"
+            },
+            "reason": "Completed",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

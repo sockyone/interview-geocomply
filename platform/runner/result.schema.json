@@ -1,0 +1,588 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Python TestSuite smoke and LoadProfile result",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "suite",
+    "runId",
+    "engine",
+    "state",
+    "outcome",
+    "startedAt",
+    "finishedAt",
+    "journeys",
+    "http",
+    "failures",
+    "executionErrors",
+    "generatorWarnings",
+    "thresholdOutcomes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "v1alpha1"
+    },
+    "suite": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "engine": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "loadModel"
+      ],
+      "properties": {
+        "name": {
+          "const": "locust"
+        },
+        "version": {
+          "const": "2.46.6"
+        },
+        "loadModel": {
+          "const": "closed-users"
+        }
+      }
+    },
+    "state": {
+      "enum": [
+        "running",
+        "completed",
+        "interrupted",
+        "error"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "incomplete",
+        "passed",
+        "failed"
+      ]
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finishedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "journeys": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "scheduled",
+          "attempted",
+          "passed",
+          "failed",
+          "interrupted",
+          "timingMs"
+        ],
+        "properties": {
+          "scheduled": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "attempted": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "passed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "interrupted": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "timingMs": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "min": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "max": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "mean": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p50": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p95": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p99": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "samples": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "min",
+              "max",
+              "mean",
+              "p50",
+              "p95",
+              "p99",
+              "samples"
+            ]
+          }
+        }
+      }
+    },
+    "http": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "method",
+          "name",
+          "requests",
+          "failures",
+          "timingMs"
+        ],
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "requests": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failures": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "timingMs": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "min": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "max": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "mean": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p50": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p95": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "p99": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "samples": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "min",
+              "max",
+              "mean",
+              "p50",
+              "p95",
+              "p99",
+              "samples"
+            ]
+          }
+        }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "executionErrors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "generatorWarnings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "thresholdOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "scope",
+          "metric",
+          "max",
+          "samples",
+          "actual",
+          "outcome"
+        ],
+        "properties": {
+          "scope": {
+            "type": "string"
+          },
+          "metric": {
+            "enum": [
+              "journeyP95Ms",
+              "journeyFailureRatio",
+              "httpFailureRatio"
+            ]
+          },
+          "max": {
+            "type": "number",
+            "minimum": 0
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "actual": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "outcome": {
+            "enum": [
+              "passed",
+              "failed",
+              "incomplete",
+              "no-samples"
+            ]
+          }
+        }
+      }
+    },
+    "failuresTruncated": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "engineReady": {
+      "type": "boolean"
+    },
+    "dataSamples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "namespace",
+          "id"
+        ],
+        "properties": {
+          "namespace": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "scriptBundleSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fixtureSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "journeyFunctions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "loadProfile": {
+      "type": "string"
+    },
+    "resolvedProfile": {
+      "type": "object"
+    },
+    "jobDeadlineSeconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "executionOutcome": {
+      "enum": [
+        "incomplete",
+        "completed",
+        "failed"
+      ]
+    },
+    "performanceOutcome": {
+      "enum": [
+        "incomplete",
+        "passed",
+        "failed"
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "transition",
+          "durationSeconds",
+          "users",
+          "measure",
+          "startedAt",
+          "finishedAt",
+          "targets",
+          "reachedTarget",
+          "journey",
+          "http"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "transition": {
+            "enum": [
+              "hold",
+              "ramp"
+            ]
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "minimum": 3
+          },
+          "users": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "measure": {
+            "type": "boolean"
+          },
+          "startedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "finishedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "targets": {
+            "type": "array"
+          },
+          "reachedTarget": {
+            "type": "boolean"
+          },
+          "journey": {
+            "type": "object"
+          },
+          "http": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "measured": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "passed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "const": "completed"
+          },
+          "executionErrors": {
+            "maxItems": 0
+          },
+          "finishedAt": {
+            "type": "string"
+          },
+          "journeys": {
+            "additionalProperties": {
+              "properties": {
+                "failed": {
+                  "const": 0
+                },
+                "interrupted": {
+                  "const": 0
+                }
+              }
+            }
+          },
+          "thresholdOutcomes": {
+            "items": {
+              "properties": {
+                "outcome": {
+                  "const": "passed"
+                },
+                "samples": {
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "loadProfile"
+        ]
+      },
+      "then": {
+        "required": [
+          "resolvedProfile",
+          "executionOutcome",
+          "performanceOutcome",
+          "stages"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "loadProfile"
+        ],
+        "properties": {
+          "outcome": {
+            "const": "passed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "executionOutcome": {
+            "const": "completed"
+          },
+          "performanceOutcome": {
+            "const": "passed"
+          },
+          "stages": {
+            "items": {
+              "properties": {
+                "reachedTarget": {
+                  "const": true
+                },
+                "finishedAt": {
+                  "type": "string"
+                }
+              },
+              "if": {
+                "properties": {
+                  "measure": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "journey": {
+                    "properties": {
+                      "samples": {
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

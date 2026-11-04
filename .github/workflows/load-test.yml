@@ -1,0 +1,116 @@
+name: load-test
+
+# Manually dispatched. Publishes the sample artifacts to a registry that lives only for this job,
+# runs the full LoadTestRun on an ephemeral kind cluster, uploads the evidence, and then fails the
+# workflow if the test did not pass. No registry credentials are used or stored.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish the sample application definition and test suite under
+        default: '0.3.0'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: load-test-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # The registry and platform artifacts come from platform/config/local.yaml.
+  CLUSTER_NAME: performance-test
+  KIND_VERSION: v0.33.0
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Install the runner
+        run: pip install -e './platform[charts]'
+
+      - name: Install pinned kind (checksum verified)
+        run: |
+          base=https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}
+          curl -fsSLo kind "$base/kind-linux-amd64"
+          echo "$(curl -fsSL "$base/kind-linux-amd64.sha256sum" | cut -d' ' -f1)  kind" | sha256sum --check
+          sudo install -m 0755 kind /usr/local/bin/kind && kind version
+
+      - name: Start the job-local artifact registry
+        run: docker run -d --name perf-artifacts-registry -p 127.0.0.1:5001:5000 registry:2.8.3
+
+      - name: Create the ephemeral cluster with monitoring
+        run: bash platform/cluster/init-kind.sh
+
+      - name: Make the registry reachable from the kind node
+        run: python -m perf_runner.kind_registry --node "${CLUSTER_NAME}-control-plane"
+
+      - name: Publish platform artifacts (runner image, chart, database)
+        run: python -m perf_runner.publication platform
+
+      - name: Publish the sample service and its test suite by name
+        run: python -m perf_runner.publication checkout --version "${{ inputs.version }}"
+
+      - name: Check guardrails are enforced by the cluster
+        env:
+          GUARDRAILS_KIND_TEST: '1'
+        run: python -m unittest discover -s platform/tests -p test_guardrails_kind.py -v
+
+      - name: Run the load test
+        id: test
+        run: |
+          set +e
+          python -m perf_runner.run run --definition LoadTestDefinitions/checkout.yaml \
+            --kubeconfig ".runtime/${CLUSTER_NAME}/kubeconfig" --context "kind-${CLUSTER_NAME}" \
+            --runs-dir .runtime/runs
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Publish the report to the workflow summary
+        if: always()
+        run: |
+          for report in .runtime/runs/lt-*/report.md; do
+            [ -f "$report" ] && cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          done
+          true
+
+      - name: Upload evidence
+        id: evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: load-test-evidence
+          path: |
+            .runtime/runs/lt-*
+            !.runtime/runs/lt-*/run.lock
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Link the evidence in the workflow summary
+        if: always()
+        run: |
+          {
+            echo ""
+            echo "**Evidence (run record, TestResult, logs, metrics):** [download load-test-evidence](${{ steps.evidence.outputs.artifact-url }})"
+            echo "Exit code: \`${{ steps.test.outputs.exit_code || 'not produced' }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Delete the ephemeral cluster and registry
+        if: always()
+        run: |
+          kind delete cluster --name "$CLUSTER_NAME" || true
+          docker rm -f perf-artifacts-registry || true
+
+      - name: Fail the workflow unless the test passed
+        if: always()
+        run: |
+          code="${{ steps.test.outputs.exit_code }}"
+          if [ "$code" != "0" ]; then
+            echo "LoadTestRun exit code: ${code:-unknown} (see the uploaded evidence)" >&2
+            exit "${code:-1}"
+          fi

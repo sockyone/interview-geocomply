@@ -1,0 +1,151 @@
+{
+  "apiVersion": "perf-runner/v1alpha1",
+  "kind": "LoadTestRun",
+  "runId": "lt-checkout-37eb5e0b",
+  "namespace": "lt-checkout-37eb5e0b",
+  "definition": "checkout",
+  "state": "finished",
+  "pid": 85342,
+  "host": "namphan.local",
+  "target": {
+    "context": "kind-performance-test",
+    "kubeconfig": ".runtime/performance-test/kubeconfig"
+  },
+  "phases": [
+    {
+      "name": "validate",
+      "startedAt": "2026-11-04T17:51:35.443493+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:35.574560+00:00",
+      "elapsedSeconds": 0.131
+    },
+    {
+      "name": "resolve",
+      "startedAt": "2026-11-04T17:51:35.574916+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:35.945977+00:00",
+      "elapsedSeconds": 0.371
+    },
+    {
+      "name": "namespace",
+      "startedAt": "2026-11-04T17:51:35.946227+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:36.127975+00:00",
+      "elapsedSeconds": 0.182
+    },
+    {
+      "name": "database",
+      "startedAt": "2026-11-04T17:51:36.128341+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:41.123479+00:00",
+      "elapsedSeconds": 4.995
+    },
+    {
+      "name": "services",
+      "startedAt": "2026-11-04T17:51:41.123671+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:42.948539+00:00",
+      "elapsedSeconds": 1.825
+    },
+    {
+      "name": "application",
+      "startedAt": "2026-11-04T17:51:42.948767+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:51:44.032261+00:00",
+      "elapsedSeconds": 1.083
+    },
+    {
+      "name": "suite",
+      "startedAt": "2026-11-04T17:51:44.032549+00:00",
+      "outcome": "succeeded",
+      "finishedAt": "2026-11-04T17:52:29.768624+00:00",
+      "elapsedSeconds": 45.736
+    }
+  ],
+  "errors": [],
+  "outcome": {
+    "test": "passed",
+    "execution": "completed",
+    "performance": "passed",
+    "collection": "ok",
+    "cleanup": "ok"
+  },
+  "logs": {
+    "progress": "progress.log",
+    "events": "events.jsonl"
+  },
+  "startedAt": "2026-11-04T17:51:35.443320+00:00",
+  "phase": "suite",
+  "platform": {
+    "name": "local",
+    "registry": "localhost:5001/performance"
+  },
+  "snapshot": ".runtime/runs/lt-checkout-37eb5e0b/resolved/resolved.json",
+  "artifacts": {
+    "applicationDefinition": {
+      "requested": "localhost:5001/performance/applications/checkout:latest",
+      "resolved": "localhost:5001/performance/applications/checkout@sha256:d14c0e2589d992e645c736419e1d505b837fbea4ef5c57aafa29cfaf1115680d",
+      "contentSha256": "sha256:d323242f009c8444f652bc0b4aa7c170c250be61c54656cf1fb83fb0fa1036cd"
+    },
+    "chart": {
+      "requested": "localhost:5001/performance/charts/http-service:0.1.0",
+      "resolved": "localhost:5001/performance/charts/http-service@sha256:3b049d3ac60e04aaed650c1b13a723b6f8d352bd893e75797d42d91d5b57fc4d",
+      "contentSha256": "sha256:9651cbf68d3d2acbd99cbca983e49897908e0a47205570c7fb00dc77e771693e"
+    },
+    "application": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "database": {
+      "requested": "localhost:5001/performance/postgres:17.6",
+      "resolved": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b"
+    },
+    "setup": {
+      "requested": "application image",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "service.payments": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "suiteRuntime": {
+      "requested": "localhost:5001/performance/python-suite:0.3.0",
+      "resolved": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36"
+    },
+    "scripts": {
+      "requested": "localhost:5001/performance/suites/checkout:latest",
+      "resolved": "localhost:5001/performance/suites/checkout@sha256:05b5a30560a252821d85f1f2a34dbdb1bf6fcee37ea2ac86418f7739f631c3db",
+      "contentSha256": "sha256:fd913336385c9e08d215e696a4364b0125115c34d01160e4b244e16e6a2103e6",
+      "scriptBundleSha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70"
+    }
+  },
+  "guardrails": {
+    "objects": [
+      "LimitRange/run-limits",
+      "ResourceQuota/run-quota",
+      "NetworkPolicy/default-deny",
+      "NetworkPolicy/allow-same-namespace",
+      "NetworkPolicy/allow-dns",
+      "NetworkPolicy/allow-monitoring-scrape"
+    ],
+    "file": ".runtime/runs/lt-checkout-37eb5e0b/guardrails.json"
+  },
+  "suite": {
+    "job": "suite",
+    "configMap": "checkout-scripts-871a615fd5b3",
+    "scriptBundleSha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70",
+    "deadlineSeconds": 115,
+    "jobState": "complete",
+    "jobReason": "CompletionsReached",
+    "collectionErrors": [],
+    "result": ".runtime/runs/lt-checkout-37eb5e0b/suite/result.json"
+  },
+  "status": "passed",
+  "exitCode": 0,
+  "finishedAt": "2026-11-04T17:52:45.747836+00:00",
+  "reports": {
+    "testResult": "testresult.json",
+    "report": "report.md",
+    "dashboard": "dashboard.png"
+  }
+}

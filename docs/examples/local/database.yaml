@@ -1,0 +1,10 @@
+spec:
+  database:
+    type: postgres
+    version: "17.6"
+    name: checkout
+    seed:
+      module: checkout.database
+      workingDirectory: ../../../sample-service
+      args: [--seed-file, fixtures/products.csv]
+      timeoutSeconds: 60

@@ -1,0 +1,25 @@
+# Local authoring fragment; published definitions use examples/published/checkout.yaml.
+spec:
+  database:
+    type: postgres
+    version: "17.6"
+    name: checkout
+    seed:
+      module: checkout.database
+      workingDirectory: ../../../sample-service
+      args: [--seed-file, fixtures/products.csv]
+      timeoutSeconds: 60
+  services:
+    payments:
+      type: payment-stub
+      image:
+        repository: checkout
+        tag: "0.3.0"
+        pullPolicy: IfNotPresent
+      delayMs: 50
+      outcome: approved
+  application:
+    definition: ../../../ApplicationDefinitions/checkout.yaml
+    bindings:
+      DATABASE_URL: database.url
+      PAYMENT_BASE_URL: services.payments.url

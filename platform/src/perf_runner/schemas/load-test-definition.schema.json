@@ -1,0 +1,422 @@
+{
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "perf-runner/v1alpha1"
+    },
+    "kind": {
+      "const": "LoadTestDefinition"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "type": "object",
+          "properties": {
+            "definition": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9-]{0,62}(?::[A-Za-z0-9_][A-Za-z0-9_.-]{0,127})?$",
+              "description": "ApplicationDefinition name, optionally :version"
+            },
+            "bindings": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "definition",
+            "bindings"
+          ],
+          "additionalProperties": false
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "postgres"
+            },
+            "version": {
+              "const": "17.6"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]{0,62}$"
+            },
+            "readinessTimeoutSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "seed": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512,
+                  "pattern": "^[a-z0-9][a-z0-9._:/-]*(?::[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}|@sha256:[a-f0-9]{64})$",
+                  "description": "Setup image; defaults to the application image"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z_]\\w*(\\.[A-Za-z_]\\w*)*$"
+                },
+                "args": {
+                  "type": "array",
+                  "maxItems": 64,
+                  "items": {
+                    "type": "string",
+                    "maxLength": 1024
+                  }
+                },
+                "bindings": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                  },
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "timeoutSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 3600
+                }
+              },
+              "required": [
+                "module",
+                "args",
+                "bindings",
+                "timeoutSeconds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type",
+            "version",
+            "name",
+            "readinessTimeoutSeconds",
+            "seed"
+          ],
+          "additionalProperties": false
+        },
+        "services": {
+          "type": "object",
+          "maxProperties": 8,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z]([-a-z0-9]{0,51}[a-z0-9])?$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "payment-stub"
+              },
+              "delayMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 60000
+              },
+              "outcome": {
+                "enum": [
+                  "approved",
+                  "declined",
+                  "error"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "delayMs",
+              "outcome"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "suite": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9-]{0,62}(?::[A-Za-z0-9_][A-Za-z0-9_.-]{0,127})?$",
+          "description": "TestSuite name, optionally :version"
+        },
+        "load": {
+          "type": "object",
+          "properties": {
+            "flow": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 50,
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "journey": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                      },
+                      "repeat": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 100
+                      }
+                    },
+                    "required": [
+                      "journey"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "waitSeconds": {
+                        "type": "number",
+                        "minimum": 0.1,
+                        "maximum": 600
+                      }
+                    },
+                    "required": [
+                      "waitSeconds"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "spawnRate": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "drainTimeoutSeconds": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 30
+            },
+            "stages": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]{0,62}$"
+                  },
+                  "transition": {
+                    "enum": [
+                      "hold",
+                      "ramp"
+                    ]
+                  },
+                  "durationSeconds": {
+                    "type": "integer",
+                    "minimum": 3,
+                    "maximum": 3600
+                  },
+                  "users": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  },
+                  "measure": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "transition",
+                  "durationSeconds",
+                  "users",
+                  "measure"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "thresholds": {
+              "type": "array",
+              "maxItems": 100,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "scope": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]{0,62}$"
+                  },
+                  "metric": {
+                    "enum": [
+                      "journeyP95Ms",
+                      "journeyFailureRatio",
+                      "httpFailureRatio"
+                    ]
+                  },
+                  "max": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "scope",
+                  "metric",
+                  "max"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "flow",
+            "spawnRate",
+            "drainTimeoutSeconds",
+            "stages",
+            "thresholds"
+          ],
+          "additionalProperties": false
+        },
+        "execution": {
+          "type": "object",
+          "properties": {
+            "requestTimeoutSeconds": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 60
+            },
+            "applicationReadinessTimeoutSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "jobStartupAllowanceSeconds": {
+              "type": "integer",
+              "minimum": 30,
+              "maximum": 600
+            },
+            "resources": {
+              "type": "object",
+              "properties": {
+                "requests": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "memory": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "additionalProperties": false
+                },
+                "limits": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "memory": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "requests",
+                "limits"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "requestTimeoutSeconds",
+            "applicationReadinessTimeoutSeconds",
+            "jobStartupAllowanceSeconds",
+            "resources"
+          ],
+          "additionalProperties": false
+        },
+        "cleanup": {
+          "type": "object",
+          "properties": {
+            "policy": {
+              "const": "always"
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            }
+          },
+          "required": [
+            "policy",
+            "timeoutSeconds"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "application",
+        "database",
+        "services",
+        "suite",
+        "load",
+        "execution",
+        "cleanup"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Published LoadTestDefinition v1alpha1"
+}

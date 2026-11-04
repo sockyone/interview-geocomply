@@ -1,0 +1,23 @@
+{
+  "run_id": "lt-checkout-37eb5e0b",
+  "namespace": "lt-checkout-37eb5e0b",
+  "release": "payments",
+  "chart": {
+    "name": "http-service",
+    "version": "0.1.0"
+  },
+  "started_at": "2026-11-04T17:51:41.259063+00:00",
+  "state": "succeeded",
+  "phase": "deploy",
+  "collection_errors": [],
+  "outputs": {
+    "release": "payments",
+    "deployment": "payments-http-service",
+    "service": "payments-http-service",
+    "host": "payments-http-service.lt-checkout-37eb5e0b.svc.cluster.local",
+    "port": 8080,
+    "url": "http://payments-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080",
+    "result_path": ".runtime/runs/lt-checkout-37eb5e0b/applications/payments/bd2c942a034b/result.json"
+  },
+  "finished_at": "2026-11-04T17:51:42.948112+00:00"
+}

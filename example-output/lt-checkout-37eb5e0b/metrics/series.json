@@ -1,0 +1,300 @@
+{
+  "cpuCores": [
+    {
+      "metric": {
+        "__name__": "container_cpu_usage_seconds_total",
+        "container": "application",
+        "cpu": "total",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podb205933a_f813_44b8_bbd5_6ad00271bbf3.slice/cri-containerd-81bfa94bab202345e17721b870381393786ed0f82bbbdea69dff547794855f5f.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "81bfa94bab202345e17721b870381393786ed0f82bbbdea69dff547794855f5f",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "payments-http-service-b4c857bdd-fpqqg",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814719.135,
+          "0.016066185871168037"
+        ],
+        [
+          1793814738.661,
+          "0.005456775574879869"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_cpu_usage_seconds_total",
+        "container": "application",
+        "cpu": "total",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podc667d211_0a89_496e_beaf_3bc761f9133e.slice/cri-containerd-345369f26eaae82cfca2e79bea4c34ad367f67beb0fbd68e89a70e1fcf1b56ec.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "345369f26eaae82cfca2e79bea4c34ad367f67beb0fbd68e89a70e1fcf1b56ec",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "application-http-service-b5cf75d4d-hkg69",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814714.425,
+          "0.07548322356540939"
+        ],
+        [
+          1793814727.263,
+          "0.10623072080688661"
+        ],
+        [
+          1793814738.601,
+          "0.10291074209870467"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_cpu_usage_seconds_total",
+        "container": "postgres",
+        "cpu": "total",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-pod1254bce7_09d3_4f54_b470_5e7bcb38d1ea.slice/cri-containerd-7ff665146162063a2a202c94d3833332b45e6ca5671aa9d1d253f4ec38e77e8f.scope",
+        "image": "docker.io/library/postgres:17.6",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "7ff665146162063a2a202c94d3833332b45e6ca5671aa9d1d253f4ec38e77e8f",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "database-6b95dc4648-gfjqz",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814713.283,
+          "0.06575710362225493"
+        ],
+        [
+          1793814725.826,
+          "0.10077461546120632"
+        ],
+        [
+          1793814738.505,
+          "0.10230144220805348"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_cpu_usage_seconds_total",
+        "container": "suite",
+        "cpu": "total",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podcbc616b4_fc8e_4a7c_abeb_d4db946ad3c7.slice/cri-containerd-b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb.scope",
+        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "suite-fx4c4",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814721.491,
+          "0.03328702754555666"
+        ],
+        [
+          1793814737.112,
+          "0.026029127370817577"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_cpu_usage_seconds_total",
+        "container": "wait-for-database",
+        "cpu": "total",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podc0559472_282f_45cd_b7a6_421df3f9b24a.slice/cri-containerd-7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "database-seed-7hcn7",
+        "service": "monitoring-kubelet"
+      },
+      "values": []
+    }
+  ],
+  "memoryBytes": [
+    {
+      "metric": {
+        "__name__": "container_memory_working_set_bytes",
+        "container": "application",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podb205933a_f813_44b8_bbd5_6ad00271bbf3.slice/cri-containerd-81bfa94bab202345e17721b870381393786ed0f82bbbdea69dff547794855f5f.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "81bfa94bab202345e17721b870381393786ed0f82bbbdea69dff547794855f5f",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "payments-http-service-b4c857bdd-fpqqg",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814702.077,
+          "16007168"
+        ],
+        [
+          1793814719.135,
+          "55001088"
+        ],
+        [
+          1793814738.661,
+          "55427072"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_memory_working_set_bytes",
+        "container": "application",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podc667d211_0a89_496e_beaf_3bc761f9133e.slice/cri-containerd-345369f26eaae82cfca2e79bea4c34ad367f67beb0fbd68e89a70e1fcf1b56ec.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "345369f26eaae82cfca2e79bea4c34ad367f67beb0fbd68e89a70e1fcf1b56ec",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "application-http-service-b5cf75d4d-hkg69",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814703.726,
+          "9318400"
+        ],
+        [
+          1793814714.425,
+          "77414400"
+        ],
+        [
+          1793814727.263,
+          "77676544"
+        ],
+        [
+          1793814738.601,
+          "78327808"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_memory_working_set_bytes",
+        "container": "postgres",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-pod1254bce7_09d3_4f54_b470_5e7bcb38d1ea.slice/cri-containerd-7ff665146162063a2a202c94d3833332b45e6ca5671aa9d1d253f4ec38e77e8f.scope",
+        "image": "docker.io/library/postgres:17.6",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "7ff665146162063a2a202c94d3833332b45e6ca5671aa9d1d253f4ec38e77e8f",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "database-6b95dc4648-gfjqz",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814697.058,
+          "847872"
+        ],
+        [
+          1793814713.283,
+          "25612288"
+        ],
+        [
+          1793814725.826,
+          "24584192"
+        ],
+        [
+          1793814738.505,
+          "26931200"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_memory_working_set_bytes",
+        "container": "suite",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podcbc616b4_fc8e_4a7c_abeb_d4db946ad3c7.slice/cri-containerd-b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb.scope",
+        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "suite-fx4c4",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814706.043,
+          "14983168"
+        ],
+        [
+          1793814721.491,
+          "43192320"
+        ],
+        [
+          1793814737.112,
+          "43261952"
+        ]
+      ]
+    },
+    {
+      "metric": {
+        "__name__": "container_memory_working_set_bytes",
+        "container": "wait-for-database",
+        "endpoint": "https-metrics",
+        "id": "/kubelet.slice/kubelet-kubepods.slice/kubelet-kubepods-burstable.slice/kubelet-kubepods-burstable-podc0559472_282f_45cd_b7a6_421df3f9b24a.slice/cri-containerd-7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98.scope",
+        "image": "docker.io/library/checkout:0.1.0",
+        "instance": "172.19.0.2:10250",
+        "job": "kubelet",
+        "metrics_path": "/metrics/cadvisor",
+        "name": "7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+        "namespace": "lt-checkout-37eb5e0b",
+        "node": "performance-test-control-plane",
+        "pod": "database-seed-7hcn7",
+        "service": "monitoring-kubelet"
+      },
+      "values": [
+        [
+          1793814698.166,
+          "3117056"
+        ]
+      ]
+    }
+  ]
+}

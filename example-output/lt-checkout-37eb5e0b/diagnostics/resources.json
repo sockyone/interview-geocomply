@@ -1,0 +1,2705 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "generateName": "application-http-service-b5cf75d4d-",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/instance": "application",
+                    "app.kubernetes.io/name": "http-service",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b",
+                    "pod-template-hash": "b5cf75d4d"
+                },
+                "name": "application-http-service-b5cf75d4d-hkg69",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "application-http-service-b5cf75d4d",
+                        "uid": "2fe40bb1-f07a-4e74-964e-99c25aff41dd"
+                    }
+                ],
+                "resourceVersion": "391687",
+                "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "PAYMENT_BASE_URL",
+                                "value": "http://payments-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+                            },
+                            {
+                                "name": "PAYMENT_TIMEOUT_MS",
+                                "value": "1000"
+                            },
+                            {
+                                "name": "DATABASE_URL",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "key": "url",
+                                        "name": "database-credentials"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/healthz",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 2
+                        },
+                        "name": "application",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 2,
+                            "httpGet": {
+                                "path": "/readyz",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 10
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-mbp79",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-mbp79",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "100m",
+                            "memory": "128Mi"
+                        },
+                        "containerID": "containerd://345369f26eaae82cfca2e79bea4c34ad367f67beb0fbd68e89a70e1fcf1b56ec",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "application",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2026-11-04T17:51:43Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-mbp79",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Running",
+                "podIP": "10.244.0.55",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.55"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "256Mi"
+                    },
+                    "requests": {
+                        "cpu": "79m",
+                        "memory": "128Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:43Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "generateName": "database-6b95dc4648-",
+                "generation": 1,
+                "labels": {
+                    "app": "database",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b",
+                    "pod-template-hash": "6b95dc4648"
+                },
+                "name": "database-6b95dc4648-gfjqz",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "database-6b95dc4648",
+                        "uid": "541967ba-74b0-455d-8576-a203d16d329d"
+                    }
+                ],
+                "resourceVersion": "391580",
+                "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "POSTGRES_DB",
+                                "value": "checkout"
+                            },
+                            {
+                                "name": "POSTGRES_USER",
+                                "value": "user_37cd45314017d385"
+                            },
+                            {
+                                "name": "POSTGRES_PASSWORD",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "key": "password",
+                                        "name": "database-credentials"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "postgres",
+                        "ports": [
+                            {
+                                "containerPort": 5432,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "exec": {
+                                "command": [
+                                    "pg_isready",
+                                    "-h",
+                                    "127.0.0.1",
+                                    "-U",
+                                    "user_37cd45314017d385",
+                                    "-d",
+                                    "checkout"
+                                ]
+                            },
+                            "failureThreshold": 3,
+                            "periodSeconds": 2,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 2
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "512Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/postgresql/data",
+                                "name": "data"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-b7cj8",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "emptyDir": {},
+                        "name": "data"
+                    },
+                    {
+                        "name": "kube-api-access-b7cj8",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:36Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:36Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:37Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:37Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:36Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "100m",
+                            "memory": "128Mi"
+                        },
+                        "containerID": "containerd://7ff665146162063a2a202c94d3833332b45e6ca5671aa9d1d253f4ec38e77e8f",
+                        "image": "docker.io/library/postgres:17.6",
+                        "imageID": "docker.io/library/postgres@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929",
+                        "lastState": {},
+                        "name": "postgres",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "512Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2026-11-04T17:51:37Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 0
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/postgresql/data",
+                                "name": "data"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-b7cj8",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Running",
+                "podIP": "10.244.0.52",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.52"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "512Mi"
+                    },
+                    "requests": {
+                        "cpu": "79m",
+                        "memory": "128Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:36Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "generateName": "database-seed-",
+                "generation": 1,
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "batch.kubernetes.io/job-name": "database-seed",
+                    "controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                    "job-name": "database-seed",
+                    "perf-runner/role": "seed",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database-seed-7hcn7",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Job",
+                        "name": "database-seed",
+                        "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+                    }
+                ],
+                "resourceVersion": "391593",
+                "uid": "c0559472-282f-45cd-b7a6-421df3f9b24a"
+            },
+            "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                    {
+                        "command": [
+                            "python",
+                            "-m",
+                            "checkout.database",
+                            "--seed-file",
+                            "fixtures/products.csv"
+                        ],
+                        "env": [
+                            {
+                                "name": "DATABASE_URL",
+                                "valueFrom": {
+                                    "secretKeyRef": {
+                                        "key": "url",
+                                        "name": "database-credentials"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "seed",
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "initContainers": [
+                    {
+                        "command": [
+                            "python",
+                            "-c",
+                            "import os,socket,time\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        socket.create_connection((os.environ['DB_HOST'], int(os.environ['DB_PORT'])), 1).close()\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "DB_HOST",
+                                "value": "database"
+                            },
+                            {
+                                "name": "DB_PORT",
+                                "value": "5432"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "wait-for-database",
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Never",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 5,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "50m",
+                    "memory": "64Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:40Z",
+                        "message": "pod sandbox is not ready",
+                        "observedGeneration": 1,
+                        "reason": "PodSandboxNotReady",
+                        "status": "False",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:38Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:39Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:39Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:37Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        },
+                        "containerID": "containerd://687528fa9b6b3caa48f056c3978531b813a7bf33117112d8d2cc4fe82d5ca8d2",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "seed",
+                        "ready": false,
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://687528fa9b6b3caa48f056c3978531b813a7bf33117112d8d2cc4fe82d5ca8d2",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:51:39Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:38Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "initContainerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        },
+                        "containerID": "containerd://7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "wait-for-database",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://7a3bea3ee454a2db5d1de6eed0cd240fd7733649cf4ee1275360112f6e133f98",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:51:38Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:38Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        }
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Succeeded",
+                "podIP": "10.244.0.53",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.53"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "limits": {
+                        "cpu": "500m",
+                        "memory": "256Mi"
+                    },
+                    "requests": {
+                        "cpu": "28m",
+                        "memory": "64Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:37Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "generateName": "payments-http-service-b4c857bdd-",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/instance": "payments",
+                    "app.kubernetes.io/name": "http-service",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b",
+                    "pod-template-hash": "b4c857bdd"
+                },
+                "name": "payments-http-service-b4c857bdd-fpqqg",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "payments-http-service-b4c857bdd",
+                        "uid": "e0956880-34cb-4954-a221-b3ec64d18284"
+                    }
+                ],
+                "resourceVersion": "391663",
+                "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "command": [
+                            "gunicorn",
+                            "--bind",
+                            "0.0.0.0:8080",
+                            "--workers",
+                            "2",
+                            "--keep-alive",
+                            "30",
+                            "--threads",
+                            "4",
+                            "--access-logfile",
+                            "-",
+                            "checkout.payments:app"
+                        ],
+                        "env": [
+                            {
+                                "name": "PAYMENT_DELAY_MS",
+                                "value": "50"
+                            },
+                            {
+                                "name": "PAYMENT_OUTCOME",
+                                "value": "approved"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                        "imagePullPolicy": "IfNotPresent",
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/healthz",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 2
+                        },
+                        "name": "application",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 2,
+                            "httpGet": {
+                                "path": "/healthz",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 10
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-s2hz6",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-s2hz6",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:42Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:42Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "100m",
+                            "memory": "128Mi"
+                        },
+                        "containerID": "containerd://81bfa94bab202345e17721b870381393786ed0f82bbbdea69dff547794855f5f",
+                        "image": "docker.io/library/checkout:0.1.0",
+                        "imageID": "docker.io/library/import-2026-11-03@sha256:247034387141ef11fa96cd30a86dd666ddd9856c5e7b187e0d56d03d2c37471e",
+                        "lastState": {},
+                        "name": "application",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "128Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2026-11-04T17:51:41Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-s2hz6",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Running",
+                "podIP": "10.244.0.54",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.54"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "256Mi"
+                    },
+                    "requests": {
+                        "cpu": "79m",
+                        "memory": "128Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:41Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "generateName": "suite-",
+                "generation": 1,
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                    "batch.kubernetes.io/job-name": "suite",
+                    "controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                    "job-name": "suite",
+                    "perf-runner/role": "suite",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "suite-fx4c4",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Job",
+                        "name": "suite",
+                        "uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+                    }
+                ],
+                "resourceVersion": "391761",
+                "uid": "cbc616b4-fc8e-4a7c-abeb-d4db946ad3c7"
+            },
+            "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                    {
+                        "args": [
+                            "--suite",
+                            "/suite-input/suite.yaml",
+                            "--profile",
+                            "/profile/profile.yaml",
+                            "--result",
+                            "/results/result.json",
+                            "--print-result",
+                            "--request-timeout",
+                            "3"
+                        ],
+                        "env": [
+                            {
+                                "name": "BASE_URL",
+                                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+                            },
+                            {
+                                "name": "RUN_ID",
+                                "value": "lt-checkout-37eb5e0b"
+                            },
+                            {
+                                "name": "PERF_RUN_PROGRESS",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "suite",
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "200m",
+                                "memory": "256Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/suite-input",
+                                "name": "user-flows",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/profile",
+                                "name": "profile",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "initContainers": [
+                    {
+                        "command": [
+                            "python",
+                            "-c",
+                            "import os,time,urllib.request\nurl = os.environ['READY_URL']\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        with urllib.request.urlopen(url, timeout=1) as response:\n            assert response.status == 200\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "READY_URL",
+                                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080/readyz"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "wait-for-application",
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "nodeName": "performance-test-control-plane",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Never",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "checkout-scripts-871a615fd5b3"
+                        },
+                        "name": "user-flows"
+                    },
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "load-profile"
+                        },
+                        "name": "profile"
+                    }
+                ]
+            },
+            "status": {
+                "allocatedResources": {
+                    "cpu": "200m",
+                    "memory": "256Mi"
+                },
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:52:28Z",
+                        "message": "pod sandbox is not ready",
+                        "observedGeneration": 1,
+                        "reason": "PodSandboxNotReady",
+                        "status": "False",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:45Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:52:26Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:52:26Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-04T17:51:44Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "200m",
+                            "memory": "256Mi"
+                        },
+                        "containerID": "containerd://b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb",
+                        "image": "sha256:5650b943c2d25b731116d42892b5ea6a024a53475b886cbedbf9a0b881669c17",
+                        "imageID": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "lastState": {},
+                        "name": "suite",
+                        "ready": false,
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "200m",
+                                "memory": "256Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://b0aa9f26dd3c1f843a2d21851713dcc066e6d1d3e0ca54b314d08f8f7f0fbedb",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:52:26Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:45Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/suite-input",
+                                "name": "user-flows",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            },
+                            {
+                                "mountPath": "/profile",
+                                "name": "profile",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "172.19.0.2",
+                "hostIPs": [
+                    {
+                        "ip": "172.19.0.2"
+                    }
+                ],
+                "initContainerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        },
+                        "containerID": "containerd://e3c0d2a7447641acc30f59eb8276e12ecdaa553da2135a1eb709d6ba1542def8",
+                        "image": "sha256:5650b943c2d25b731116d42892b5ea6a024a53475b886cbedbf9a0b881669c17",
+                        "imageID": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "lastState": {},
+                        "name": "wait-for-application",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://e3c0d2a7447641acc30f59eb8276e12ecdaa553da2135a1eb709d6ba1542def8",
+                                "exitCode": 0,
+                                "finishedAt": "2026-11-04T17:51:44Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-11-04T17:51:44Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 10001
+                            }
+                        }
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Succeeded",
+                "podIP": "10.244.0.56",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.56"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "resources": {
+                    "requests": {
+                        "memory": "256Mi"
+                    }
+                },
+                "startTime": "2026-11-04T17:51:44Z"
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "meta.helm.sh/release-name": "application",
+                    "meta.helm.sh/release-namespace": "lt-checkout-37eb5e0b"
+                },
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/instance": "application",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "application-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391668",
+                "uid": "18abe635-cff1-4756-8f5d-0392542e792c"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app.kubernetes.io/instance": "application",
+                        "app.kubernetes.io/name": "http-service"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app.kubernetes.io/instance": "application",
+                            "app.kubernetes.io/name": "http-service",
+                            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "PAYMENT_BASE_URL",
+                                        "value": "http://payments-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+                                    },
+                                    {
+                                        "name": "PAYMENT_TIMEOUT_MS",
+                                        "value": "1000"
+                                    },
+                                    {
+                                        "name": "DATABASE_URL",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "url",
+                                                "name": "database-credentials"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                                "imagePullPolicy": "IfNotPresent",
+                                "livenessProbe": {
+                                    "failureThreshold": 3,
+                                    "httpGet": {
+                                        "path": "/healthz",
+                                        "port": "http",
+                                        "scheme": "HTTP"
+                                    },
+                                    "periodSeconds": 10,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 2
+                                },
+                                "name": "application",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "failureThreshold": 2,
+                                    "httpGet": {
+                                        "path": "/readyz",
+                                        "port": "http",
+                                        "scheme": "HTTP"
+                                    },
+                                    "periodSeconds": 5,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 10
+                                },
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "256Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "100m",
+                                        "memory": "128Mi"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:44Z",
+                        "lastUpdateTime": "2026-11-04T17:51:44Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:43Z",
+                        "lastUpdateTime": "2026-11-04T17:51:44Z",
+                        "message": "ReplicaSet \"application-http-service-b5cf75d4d\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "terminatingReplicas": 0,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                },
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "generation": 1,
+                "labels": {
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391563",
+                "uid": "af82fd7b-db05-4aaf-bccc-11ab4a7bd353"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app": "database",
+                        "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app": "database",
+                            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "POSTGRES_DB",
+                                        "value": "checkout"
+                                    },
+                                    {
+                                        "name": "POSTGRES_USER",
+                                        "value": "user_37cd45314017d385"
+                                    },
+                                    {
+                                        "name": "POSTGRES_PASSWORD",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "password",
+                                                "name": "database-credentials"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "postgres",
+                                "ports": [
+                                    {
+                                        "containerPort": 5432,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "exec": {
+                                        "command": [
+                                            "pg_isready",
+                                            "-h",
+                                            "127.0.0.1",
+                                            "-U",
+                                            "user_37cd45314017d385",
+                                            "-d",
+                                            "checkout"
+                                        ]
+                                    },
+                                    "failureThreshold": 3,
+                                    "periodSeconds": 2,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 2
+                                },
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "512Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "100m",
+                                        "memory": "128Mi"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/var/lib/postgresql/data",
+                                        "name": "data"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "emptyDir": {},
+                                "name": "data"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:37Z",
+                        "lastUpdateTime": "2026-11-04T17:51:37Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:36Z",
+                        "lastUpdateTime": "2026-11-04T17:51:37Z",
+                        "message": "ReplicaSet \"database-6b95dc4648\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "terminatingReplicas": 0,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1",
+                    "meta.helm.sh/release-name": "payments",
+                    "meta.helm.sh/release-namespace": "lt-checkout-37eb5e0b"
+                },
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/instance": "payments",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "payments-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391632",
+                "uid": "55ceb46d-8e71-4670-9038-4ac303d08b1b"
+            },
+            "spec": {
+                "progressDeadlineSeconds": 600,
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app.kubernetes.io/instance": "payments",
+                        "app.kubernetes.io/name": "http-service"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": "25%",
+                        "maxUnavailable": "25%"
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app.kubernetes.io/instance": "payments",
+                            "app.kubernetes.io/name": "http-service",
+                            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "command": [
+                                    "gunicorn",
+                                    "--bind",
+                                    "0.0.0.0:8080",
+                                    "--workers",
+                                    "2",
+                                    "--keep-alive",
+                                    "30",
+                                    "--threads",
+                                    "4",
+                                    "--access-logfile",
+                                    "-",
+                                    "checkout.payments:app"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "PAYMENT_DELAY_MS",
+                                        "value": "50"
+                                    },
+                                    {
+                                        "name": "PAYMENT_OUTCOME",
+                                        "value": "approved"
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                                "imagePullPolicy": "IfNotPresent",
+                                "livenessProbe": {
+                                    "failureThreshold": 3,
+                                    "httpGet": {
+                                        "path": "/healthz",
+                                        "port": "http",
+                                        "scheme": "HTTP"
+                                    },
+                                    "periodSeconds": 10,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 2
+                                },
+                                "name": "application",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "name": "http",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "readinessProbe": {
+                                    "failureThreshold": 2,
+                                    "httpGet": {
+                                        "path": "/healthz",
+                                        "port": "http",
+                                        "scheme": "HTTP"
+                                    },
+                                    "periodSeconds": 5,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 10
+                                },
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "256Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "100m",
+                                        "memory": "128Mi"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:42Z",
+                        "lastUpdateTime": "2026-11-04T17:51:42Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    },
+                    {
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "lastUpdateTime": "2026-11-04T17:51:42Z",
+                        "message": "ReplicaSet \"payments-http-service-b4c857bdd\" has successfully progressed.",
+                        "reason": "NewReplicaSetAvailable",
+                        "status": "True",
+                        "type": "Progressing"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "terminatingReplicas": 0,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "meta.helm.sh/release-name": "application",
+                    "meta.helm.sh/release-namespace": "lt-checkout-37eb5e0b"
+                },
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "labels": {
+                    "app.kubernetes.io/instance": "application",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "application-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391638",
+                "uid": "edc5313d-01ac-47bc-af2d-08a2cac82565"
+            },
+            "spec": {
+                "clusterIP": "10.96.47.18",
+                "clusterIPs": [
+                    "10.96.47.18"
+                ],
+                "internalTrafficPolicy": "Cluster",
+                "ipFamilies": [
+                    "IPv4"
+                ],
+                "ipFamilyPolicy": "SingleStack",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    }
+                ],
+                "selector": {
+                    "app.kubernetes.io/instance": "application",
+                    "app.kubernetes.io/name": "http-service"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "labels": {
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391532",
+                "uid": "8051cab0-5fe4-4c05-821b-340c52aa8df9"
+            },
+            "spec": {
+                "clusterIP": "10.96.223.86",
+                "clusterIPs": [
+                    "10.96.223.86"
+                ],
+                "internalTrafficPolicy": "Cluster",
+                "ipFamilies": [
+                    "IPv4"
+                ],
+                "ipFamilyPolicy": "SingleStack",
+                "ports": [
+                    {
+                        "name": "postgres",
+                        "port": 5432,
+                        "protocol": "TCP",
+                        "targetPort": 5432
+                    }
+                ],
+                "selector": {
+                    "app": "database",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "annotations": {
+                    "meta.helm.sh/release-name": "payments",
+                    "meta.helm.sh/release-namespace": "lt-checkout-37eb5e0b"
+                },
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "labels": {
+                    "app.kubernetes.io/instance": "payments",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "payments-http-service",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391599",
+                "uid": "bbad6399-2cd8-4f67-9d7c-79b41ea9e4e8"
+            },
+            "spec": {
+                "clusterIP": "10.96.85.98",
+                "clusterIPs": [
+                    "10.96.85.98"
+                ],
+                "internalTrafficPolicy": "Cluster",
+                "ipFamilies": [
+                    "IPv4"
+                ],
+                "ipFamilyPolicy": "SingleStack",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    }
+                ],
+                "selector": {
+                    "app.kubernetes.io/instance": "payments",
+                    "app.kubernetes.io/name": "http-service"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:37Z",
+                "generation": 1,
+                "labels": {
+                    "perf-runner/role": "seed",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database-seed",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391594",
+                "uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+            },
+            "spec": {
+                "activeDeadlineSeconds": 60,
+                "backoffLimit": 0,
+                "completionMode": "NonIndexed",
+                "completions": 1,
+                "manualSelector": false,
+                "parallelism": 1,
+                "podReplacementPolicy": "TerminatingOrFailed",
+                "selector": {
+                    "matchLabels": {
+                        "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a"
+                    }
+                },
+                "suspend": false,
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "batch.kubernetes.io/controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                            "batch.kubernetes.io/job-name": "database-seed",
+                            "controller-uid": "a622b153-0572-4b9b-be7a-fddff8be1e3a",
+                            "job-name": "database-seed",
+                            "perf-runner/role": "seed",
+                            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                        }
+                    },
+                    "spec": {
+                        "automountServiceAccountToken": false,
+                        "containers": [
+                            {
+                                "command": [
+                                    "python",
+                                    "-m",
+                                    "checkout.database",
+                                    "--seed-file",
+                                    "fixtures/products.csv"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "DATABASE_URL",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "url",
+                                                "name": "database-credentials"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "seed",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "500m",
+                                        "memory": "256Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "64Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "ALL"
+                                        ]
+                                    },
+                                    "runAsNonRoot": true,
+                                    "seccompProfile": {
+                                        "type": "RuntimeDefault"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "initContainers": [
+                            {
+                                "command": [
+                                    "python",
+                                    "-c",
+                                    "import os,socket,time\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        socket.create_connection((os.environ['DB_HOST'], int(os.environ['DB_PORT'])), 1).close()\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "DB_HOST",
+                                        "value": "database"
+                                    },
+                                    {
+                                        "name": "DB_PORT",
+                                        "value": "5432"
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "wait-for-database",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "200m",
+                                        "memory": "128Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "64Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "ALL"
+                                        ]
+                                    },
+                                    "runAsNonRoot": true,
+                                    "seccompProfile": {
+                                        "type": "RuntimeDefault"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "restartPolicy": "Never",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 5
+                    }
+                }
+            },
+            "status": {
+                "completionTime": "2026-11-04T17:51:41Z",
+                "conditions": [
+                    {
+                        "lastProbeTime": "2026-11-04T17:51:41Z",
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "message": "Reached expected number of succeeded pods",
+                        "reason": "CompletionsReached",
+                        "status": "True",
+                        "type": "SuccessCriteriaMet"
+                    },
+                    {
+                        "lastProbeTime": "2026-11-04T17:51:41Z",
+                        "lastTransitionTime": "2026-11-04T17:51:41Z",
+                        "message": "Reached expected number of succeeded pods",
+                        "reason": "CompletionsReached",
+                        "status": "True",
+                        "type": "Complete"
+                    }
+                ],
+                "ready": 0,
+                "startTime": "2026-11-04T17:51:37Z",
+                "succeeded": 1,
+                "terminating": 0,
+                "uncountedTerminatedPods": {}
+            }
+        },
+        {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:44Z",
+                "generation": 1,
+                "labels": {
+                    "perf-runner/role": "suite",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "suite",
+                "namespace": "lt-checkout-37eb5e0b",
+                "resourceVersion": "391762",
+                "uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+            },
+            "spec": {
+                "activeDeadlineSeconds": 115,
+                "backoffLimit": 0,
+                "completionMode": "NonIndexed",
+                "completions": 1,
+                "manualSelector": false,
+                "parallelism": 1,
+                "podReplacementPolicy": "TerminatingOrFailed",
+                "selector": {
+                    "matchLabels": {
+                        "batch.kubernetes.io/controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+                    }
+                },
+                "suspend": false,
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "batch.kubernetes.io/controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                            "batch.kubernetes.io/job-name": "suite",
+                            "controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                            "job-name": "suite",
+                            "perf-runner/role": "suite",
+                            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                        }
+                    },
+                    "spec": {
+                        "automountServiceAccountToken": false,
+                        "containers": [
+                            {
+                                "args": [
+                                    "--suite",
+                                    "/suite-input/suite.yaml",
+                                    "--profile",
+                                    "/profile/profile.yaml",
+                                    "--result",
+                                    "/results/result.json",
+                                    "--print-result",
+                                    "--request-timeout",
+                                    "3"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "BASE_URL",
+                                        "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+                                    },
+                                    {
+                                        "name": "RUN_ID",
+                                        "value": "lt-checkout-37eb5e0b"
+                                    },
+                                    {
+                                        "name": "PERF_RUN_PROGRESS",
+                                        "value": "1"
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "suite",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "256Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "200m",
+                                        "memory": "256Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "ALL"
+                                        ]
+                                    },
+                                    "runAsNonRoot": true,
+                                    "seccompProfile": {
+                                        "type": "RuntimeDefault"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/suite-input",
+                                        "name": "user-flows",
+                                        "readOnly": true
+                                    },
+                                    {
+                                        "mountPath": "/profile",
+                                        "name": "profile",
+                                        "readOnly": true
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "initContainers": [
+                            {
+                                "command": [
+                                    "python",
+                                    "-c",
+                                    "import os,time,urllib.request\nurl = os.environ['READY_URL']\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        with urllib.request.urlopen(url, timeout=1) as response:\n            assert response.status == 200\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "READY_URL",
+                                        "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080/readyz"
+                                    }
+                                ],
+                                "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "wait-for-application",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "200m",
+                                        "memory": "128Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "64Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "ALL"
+                                        ]
+                                    },
+                                    "runAsNonRoot": true,
+                                    "seccompProfile": {
+                                        "type": "RuntimeDefault"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "restartPolicy": "Never",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30,
+                        "volumes": [
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "checkout-scripts-871a615fd5b3"
+                                },
+                                "name": "user-flows"
+                            },
+                            {
+                                "configMap": {
+                                    "defaultMode": 420,
+                                    "name": "load-profile"
+                                },
+                                "name": "profile"
+                            }
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "completionTime": "2026-11-04T17:52:28Z",
+                "conditions": [
+                    {
+                        "lastProbeTime": "2026-11-04T17:52:28Z",
+                        "lastTransitionTime": "2026-11-04T17:52:28Z",
+                        "message": "Reached expected number of succeeded pods",
+                        "reason": "CompletionsReached",
+                        "status": "True",
+                        "type": "SuccessCriteriaMet"
+                    },
+                    {
+                        "lastProbeTime": "2026-11-04T17:52:28Z",
+                        "lastTransitionTime": "2026-11-04T17:52:28Z",
+                        "message": "Reached expected number of succeeded pods",
+                        "reason": "CompletionsReached",
+                        "status": "True",
+                        "type": "Complete"
+                    }
+                ],
+                "ready": 0,
+                "startTime": "2026-11-04T17:51:44Z",
+                "succeeded": 1,
+                "terminating": 0,
+                "uncountedTerminatedPods": {}
+            }
+        },
+        {
+            "addressType": "IPv4",
+            "apiVersion": "discovery.k8s.io/v1",
+            "endpoints": [
+                {
+                    "addresses": [
+                        "10.244.0.55"
+                    ],
+                    "conditions": {
+                        "ready": true,
+                        "serving": true,
+                        "terminating": false
+                    },
+                    "nodeName": "performance-test-control-plane",
+                    "targetRef": {
+                        "kind": "Pod",
+                        "name": "application-http-service-b5cf75d4d-hkg69",
+                        "namespace": "lt-checkout-37eb5e0b",
+                        "uid": "c667d211-0a89-496e-beaf-3bc761f9133e"
+                    }
+                }
+            ],
+            "kind": "EndpointSlice",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T17:51:43Z",
+                "generateName": "application-http-service-",
+                "generation": 3,
+                "labels": {
+                    "app.kubernetes.io/instance": "application",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "endpointslice.kubernetes.io/managed-by": "endpointslice-controller.k8s.io",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "kubernetes.io/service-name": "application-http-service",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "application-http-service-tstsc",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Service",
+                        "name": "application-http-service",
+                        "uid": "edc5313d-01ac-47bc-af2d-08a2cac82565"
+                    }
+                ],
+                "resourceVersion": "391667",
+                "uid": "da5b0d25-56ae-48b2-a0c8-98330a501b79"
+            },
+            "ports": [
+                {
+                    "name": "http",
+                    "port": 8080,
+                    "protocol": "TCP"
+                }
+            ]
+        },
+        {
+            "addressType": "IPv4",
+            "apiVersion": "discovery.k8s.io/v1",
+            "endpoints": [
+                {
+                    "addresses": [
+                        "10.244.0.52"
+                    ],
+                    "conditions": {
+                        "ready": true,
+                        "serving": true,
+                        "terminating": false
+                    },
+                    "nodeName": "performance-test-control-plane",
+                    "targetRef": {
+                        "kind": "Pod",
+                        "name": "database-6b95dc4648-gfjqz",
+                        "namespace": "lt-checkout-37eb5e0b",
+                        "uid": "1254bce7-09d3-4f54-b470-5e7bcb38d1ea"
+                    }
+                }
+            ],
+            "kind": "EndpointSlice",
+            "metadata": {
+                "annotations": {
+                    "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-04T17:51:37Z"
+                },
+                "creationTimestamp": "2026-11-04T17:51:36Z",
+                "generateName": "database-",
+                "generation": 3,
+                "labels": {
+                    "endpointslice.kubernetes.io/managed-by": "endpointslice-controller.k8s.io",
+                    "kubernetes.io/service-name": "database",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "database-z7fps",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Service",
+                        "name": "database",
+                        "uid": "8051cab0-5fe4-4c05-821b-340c52aa8df9"
+                    }
+                ],
+                "resourceVersion": "391561",
+                "uid": "f4c58533-bde0-4358-98fb-90110613a8e4"
+            },
+            "ports": [
+                {
+                    "name": "postgres",
+                    "port": 5432,
+                    "protocol": "TCP"
+                }
+            ]
+        },
+        {
+            "addressType": "IPv4",
+            "apiVersion": "discovery.k8s.io/v1",
+            "endpoints": [
+                {
+                    "addresses": [
+                        "10.244.0.54"
+                    ],
+                    "conditions": {
+                        "ready": true,
+                        "serving": true,
+                        "terminating": false
+                    },
+                    "nodeName": "performance-test-control-plane",
+                    "targetRef": {
+                        "kind": "Pod",
+                        "name": "payments-http-service-b4c857bdd-fpqqg",
+                        "namespace": "lt-checkout-37eb5e0b",
+                        "uid": "b205933a-f813-44b8-bbd5-6ad00271bbf3"
+                    }
+                }
+            ],
+            "kind": "EndpointSlice",
+            "metadata": {
+                "annotations": {
+                    "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-04T17:51:42Z"
+                },
+                "creationTimestamp": "2026-11-04T17:51:41Z",
+                "generateName": "payments-http-service-",
+                "generation": 3,
+                "labels": {
+                    "app.kubernetes.io/instance": "payments",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "http-service",
+                    "endpointslice.kubernetes.io/managed-by": "endpointslice-controller.k8s.io",
+                    "helm.sh/chart": "http-service-0.1.0",
+                    "kubernetes.io/service-name": "payments-http-service",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                },
+                "name": "payments-http-service-hwfrm",
+                "namespace": "lt-checkout-37eb5e0b",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Service",
+                        "name": "payments-http-service",
+                        "uid": "bbad6399-2cd8-4f67-9d7c-79b41ea9e4e8"
+                    }
+                ],
+                "resourceVersion": "391630",
+                "uid": "33dd242f-ccce-497c-8dc6-e310ffe02cb6"
+            },
+            "ports": [
+                {
+                    "name": "http",
+                    "port": 8080,
+                    "protocol": "TCP"
+                }
+            ]
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

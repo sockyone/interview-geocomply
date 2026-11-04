@@ -1,0 +1,403 @@
+{
+  "apiVersion": "perf-runner/v1alpha1",
+  "kind": "ResolvedLoadTestDefinition",
+  "resolvedAt": "2026-11-04T17:51:35.945548+00:00",
+  "definition": {
+    "apiVersion": "perf-runner/v1alpha1",
+    "kind": "LoadTestDefinition",
+    "metadata": {
+      "name": "checkout"
+    },
+    "spec": {
+      "application": {
+        "definition": "checkout",
+        "bindings": {
+          "DATABASE_URL": "database.url",
+          "PAYMENT_BASE_URL": "services.payments.url"
+        }
+      },
+      "database": {
+        "type": "postgres",
+        "version": "17.6",
+        "name": "checkout",
+        "readinessTimeoutSeconds": 150,
+        "seed": {
+          "module": "checkout.database",
+          "args": [
+            "--seed-file",
+            "fixtures/products.csv"
+          ],
+          "bindings": {
+            "DATABASE_URL": "database.url"
+          },
+          "timeoutSeconds": 60
+        }
+      },
+      "services": {
+        "payments": {
+          "type": "payment-stub",
+          "delayMs": 50,
+          "outcome": "approved"
+        }
+      },
+      "suite": "checkout",
+      "load": {
+        "flow": [
+          {
+            "journey": "browse",
+            "repeat": 3
+          },
+          {
+            "waitSeconds": 2
+          },
+          {
+            "journey": "purchase"
+          }
+        ],
+        "spawnRate": 5,
+        "drainTimeoutSeconds": 5,
+        "stages": [
+          {
+            "name": "ramp-up",
+            "transition": "ramp",
+            "durationSeconds": 10,
+            "users": 10,
+            "measure": false
+          },
+          {
+            "name": "steady",
+            "transition": "hold",
+            "durationSeconds": 30,
+            "users": 10,
+            "measure": true
+          }
+        ],
+        "thresholds": [
+          {
+            "scope": "measured",
+            "metric": "journeyP95Ms",
+            "max": 2000
+          },
+          {
+            "scope": "steady",
+            "metric": "journeyFailureRatio",
+            "max": 0
+          },
+          {
+            "scope": "measured",
+            "metric": "httpFailureRatio",
+            "max": 0
+          }
+        ]
+      },
+      "execution": {
+        "requestTimeoutSeconds": 3,
+        "applicationReadinessTimeoutSeconds": 180,
+        "jobStartupAllowanceSeconds": 60,
+        "resources": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      },
+      "cleanup": {
+        "policy": "always",
+        "timeoutSeconds": 120
+      }
+    }
+  },
+  "artifacts": {
+    "applicationDefinition": {
+      "requested": "localhost:5001/performance/applications/checkout:latest",
+      "resolved": "localhost:5001/performance/applications/checkout@sha256:d14c0e2589d992e645c736419e1d505b837fbea4ef5c57aafa29cfaf1115680d",
+      "contentSha256": "sha256:d323242f009c8444f652bc0b4aa7c170c250be61c54656cf1fb83fb0fa1036cd"
+    },
+    "chart": {
+      "requested": "localhost:5001/performance/charts/http-service:0.1.0",
+      "resolved": "localhost:5001/performance/charts/http-service@sha256:3b049d3ac60e04aaed650c1b13a723b6f8d352bd893e75797d42d91d5b57fc4d",
+      "contentSha256": "sha256:9651cbf68d3d2acbd99cbca983e49897908e0a47205570c7fb00dc77e771693e"
+    },
+    "application": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "database": {
+      "requested": "localhost:5001/performance/postgres:17.6",
+      "resolved": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b"
+    },
+    "setup": {
+      "requested": "application image",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "service.payments": {
+      "requested": "localhost:5001/performance/checkout:0.3.0",
+      "resolved": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+    },
+    "suiteRuntime": {
+      "requested": "localhost:5001/performance/python-suite:0.3.0",
+      "resolved": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36"
+    },
+    "scripts": {
+      "requested": "localhost:5001/performance/suites/checkout:latest",
+      "resolved": "localhost:5001/performance/suites/checkout@sha256:05b5a30560a252821d85f1f2a34dbdb1bf6fcee37ea2ac86418f7739f631c3db",
+      "contentSha256": "sha256:fd913336385c9e08d215e696a4364b0125115c34d01160e4b244e16e6a2103e6",
+      "scriptBundleSha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70"
+    }
+  },
+  "application": {
+    "apiVersion": "perf-runner/v1alpha1",
+    "kind": "ApplicationDefinition",
+    "metadata": {
+      "name": "checkout"
+    },
+    "spec": {
+      "chart": {
+        "name": "http-service",
+        "version": "0.1.0"
+      },
+      "values": {
+        "image": {
+          "repository": "localhost:5001/performance/checkout",
+          "tag": "resolved",
+          "digest": "sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+        },
+        "port": 8080,
+        "service": {
+          "port": 8080
+        },
+        "replicaCount": 1,
+        "probes": {
+          "liveness": {
+            "path": "/healthz"
+          },
+          "readiness": {
+            "path": "/readyz"
+          }
+        },
+        "env": {
+          "PAYMENT_BASE_URL": "http://payments:8080",
+          "PAYMENT_TIMEOUT_MS": "1000"
+        },
+        "secretEnv": {
+          "DATABASE_URL": {
+            "name": "checkout-database",
+            "key": "url"
+          }
+        }
+      }
+    }
+  },
+  "services": {
+    "payments": {
+      "apiVersion": "perf-runner/v1alpha1",
+      "kind": "ApplicationDefinition",
+      "metadata": {
+        "name": "payments"
+      },
+      "spec": {
+        "chart": {
+          "name": "http-service",
+          "version": "0.1.0"
+        },
+        "values": {
+          "image": {
+            "repository": "localhost:5001/performance/checkout",
+            "tag": "resolved",
+            "digest": "sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d",
+            "pullPolicy": "IfNotPresent"
+          },
+          "port": 8080,
+          "service": {
+            "port": 8080
+          },
+          "replicaCount": 1,
+          "command": [
+            "gunicorn",
+            "--bind",
+            "0.0.0.0:8080",
+            "--workers",
+            "2",
+            "--keep-alive",
+            "30",
+            "--threads",
+            "4",
+            "--access-logfile",
+            "-",
+            "checkout.payments:app"
+          ],
+          "probes": {
+            "liveness": {
+              "path": "/healthz"
+            },
+            "readiness": {
+              "path": "/healthz"
+            }
+          },
+          "env": {
+            "PAYMENT_DELAY_MS": "50",
+            "PAYMENT_OUTCOME": "approved"
+          }
+        }
+      }
+    }
+  },
+  "database": {
+    "image": "localhost:5001/performance/postgres@sha256:ac74e8c63c516b1f81fbaaede0663981399f80e42369431136b2455557f8547b",
+    "seedImage": "localhost:5001/performance/checkout@sha256:b5a2cac6b5481f49b0a0a4bfa682fda11190e5a33638ce1d56d5374d2492551d"
+  },
+  "suite": {
+    "runtimeImage": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+    "scriptBundleSha256": "871a615fd5b350c2a10ffc31a28c456c111f51a05e3ae1894ea28ce424a8fd70",
+    "files": [
+      "fixtures.json",
+      "scenarios.py",
+      "suite.yaml"
+    ],
+    "journeys": {
+      "browse": {
+        "callable": "scenarios:browse",
+        "description": "View one product page and check its price"
+      },
+      "purchase": {
+        "callable": "scenarios:purchase",
+        "description": "Create, update, pay, and verify an order"
+      }
+    }
+  },
+  "execution": {
+    "jobDeadlineSeconds": 115,
+    "requestTimeoutSeconds": 3,
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "256Mi"
+      }
+    }
+  },
+  "resourcePlan": {
+    "policy": {
+      "defaultRequest": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "defaultLimit": {
+        "cpu": "500m",
+        "memory": "512Mi"
+      },
+      "containerMax": {
+        "cpu": "2",
+        "memory": "2Gi"
+      },
+      "namespaceRequests": {
+        "cpu": "4",
+        "memory": "4Gi"
+      },
+      "namespaceLimits": {
+        "cpu": "8",
+        "memory": "8Gi"
+      },
+      "maxPods": 20,
+      "maxServices": 10
+    },
+    "pods": 5,
+    "totals": {
+      "requests": {
+        "cpu": "550m",
+        "memory": "704Mi"
+      },
+      "limits": {
+        "cpu": "4500m",
+        "memory": "1536Mi"
+      }
+    },
+    "components": [
+      {
+        "component": "database",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "512Mi"
+          }
+        }
+      },
+      {
+        "component": "seed",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "50m",
+            "memory": "64Mi"
+          },
+          "limits": {
+            "cpu": "500m",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "suite",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "application",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      },
+      {
+        "component": "payments",
+        "replicas": 1,
+        "pod": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        }
+      }
+    ]
+  },
+  "setupOrder": [
+    "database-ready",
+    "seed-complete",
+    "services-ready",
+    "application-ready",
+    "suite"
+  ],
+  "state": "resolved"
+}

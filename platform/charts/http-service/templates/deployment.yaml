@@ -1,0 +1,75 @@
+{{- range $name, $_ := .Values.secretEnv }}
+{{- if hasKey $.Values.env $name }}
+{{- fail (printf "environment variable %s occurs in both env and secretEnv" $name) }}
+{{- end }}
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "http-service.fullname" . }}
+  labels:
+    {{- include "http-service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "http-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "http-service.selectorLabels" . | nindent 8 }}
+        {{- if .Values.runId }}
+        perf-runner/run-id: {{ .Values.runId | quote }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: application
+          {{- if .Values.image.digest }}
+          image: {{ printf "%s@%s" .Values.image.repository .Values.image.digest | quote }}
+          {{- else }}
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.args }}
+          args:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.port }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- range $name, $probe := .Values.probes }}
+          {{ $name }}Probe:
+            httpGet:
+              path: {{ $probe.path | quote }}
+              port: http
+            initialDelaySeconds: {{ $probe.initialDelaySeconds }}
+            periodSeconds: {{ $probe.periodSeconds }}
+            timeoutSeconds: {{ $probe.timeoutSeconds }}
+            failureThreshold: {{ $probe.failureThreshold }}
+          {{- end }}
+          {{- if or .Values.env .Values.secretEnv }}
+          env:
+            {{- range $name, $value := .Values.env }}
+            - name: {{ $name | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- range $name, $ref := .Values.secretEnv }}
+            - name: {{ $name | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $ref.name | quote }}
+                  key: {{ $ref.key | quote }}
+            {{- end }}
+          {{- end }}

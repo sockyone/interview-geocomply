@@ -1,0 +1,5 @@
+apiVersion: v2
+name: http-service
+description: Supported chart for a single-container HTTP application
+version: 0.1.0
+type: application

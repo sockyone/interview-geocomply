@@ -1,0 +1,115 @@
+# Pinned kube-prometheus-stack chart; local kind environment only.
+fullnameOverride: monitoring
+
+# Dashboards and alerting are intentionally a later step.
+defaultRules:
+  create: false
+alertmanager:
+  enabled: false
+
+grafana:
+  enabled: true
+  fullnameOverride: monitoring-grafana
+  defaultDashboardsEnabled: false
+  adminUser: admin
+  # Leave adminPassword unset: the chart generates and retains a random Secret.
+  service:
+    type: ClusterIP
+  persistence:
+    enabled: true
+    storageClassName: standard
+    size: 1Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  sidecar:
+    dashboards:
+      enabled: false
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+      alertmanager:
+        enabled: false
+
+prometheus:
+  service:
+    type: ClusterIP
+  prometheusSpec:
+    replicas: 1
+    retention: 24h
+    retentionSize: 4GB
+    scrapeInterval: 5s
+    evaluationInterval: 5s
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 5Gi
+
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+# Collect CPU, memory, throttling and container metrics for ALL namespaces.
+kubelet:
+  enabled: true
+  serviceMonitor:
+    cAdvisor: true
+    cAdvisorInterval: 5s
+
+# Object state: replicas, requests/limits, Pod status and restart counts.
+kubeStateMetrics:
+  enabled: true
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+# kind nodes are containers; these are node/VM metrics, not macOS host metrics.
+nodeExporter:
+  enabled: true
+prometheus-node-exporter:
+  hostRootFsMount:
+    # Avoid shared mount propagation requirements on Docker Desktop/Colima.
+    mountPropagation: None
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+# These kind control-plane endpoints aren't exposed to the monitoring Pods.
+# Keep API server, kubelet/cAdvisor, CoreDNS and workload monitoring enabled.
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false

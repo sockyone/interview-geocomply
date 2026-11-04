@@ -1,0 +1,23 @@
+{
+  "run_id": "lt-checkout-37eb5e0b",
+  "namespace": "lt-checkout-37eb5e0b",
+  "release": "application",
+  "chart": {
+    "name": "http-service",
+    "version": "0.1.0"
+  },
+  "started_at": "2026-11-04T17:51:43.069334+00:00",
+  "state": "succeeded",
+  "phase": "deploy",
+  "collection_errors": [],
+  "outputs": {
+    "release": "application",
+    "deployment": "application-http-service",
+    "service": "application-http-service",
+    "host": "application-http-service.lt-checkout-37eb5e0b.svc.cluster.local",
+    "port": 8080,
+    "url": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080",
+    "result_path": ".runtime/runs/lt-checkout-37eb5e0b/applications/application/4bc41ea62391/result.json"
+  },
+  "finished_at": "2026-11-04T17:51:44.031724+00:00"
+}

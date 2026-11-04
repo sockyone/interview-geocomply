@@ -1,0 +1,14 @@
+apiVersion: perf-runner/v1alpha1
+kind: TestSuite
+metadata:
+  name: checkout
+spec:
+  # Journeys and data only. The platform supplies the runner image and delivers these files to it.
+  fixtures: fixtures.json
+  journeys:
+    browse:
+      callable: scenarios:browse
+      description: View one product page and check its price
+    purchase:
+      callable: scenarios:purchase
+      description: Create, update, pay, and verify an order

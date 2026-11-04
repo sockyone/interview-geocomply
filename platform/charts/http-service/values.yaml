@@ -1,0 +1,45 @@
+image:
+  repository: registry.example/application
+  tag: "0.1.0"
+  # When set, digest takes precedence over tag.
+  digest: ""
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+command: []
+args: []
+port: 8080
+replicaCount: 1
+service:
+  port: 8080
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: "1"
+    memory: 256Mi
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readiness:
+    path: /
+    initialDelaySeconds: 0
+    periodSeconds: 5
+    timeoutSeconds: 10
+    failureThreshold: 2
+# Literal non-secret settings; values must be strings.
+env: {}
+# Map environment names to existing Secrets in the release namespace.
+secretEnv: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 70
+
+# Set by the runner for resource ownership; empty for manual deployments.
+runId: ""

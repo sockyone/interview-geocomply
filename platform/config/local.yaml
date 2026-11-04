@@ -1,0 +1,30 @@
+# Platform configuration: owned by the platform (DevOps) team, never by test authors.
+# Test definitions refer to applications, suites and images by name; this file says where
+# those names live and which platform-supplied artifacts (chart, runner, databases, stubs) to use.
+# Select another file with --platform or PERF_PLATFORM (for example a CI or EKS config).
+apiVersion: perf-runner/v1alpha1
+kind: Platform
+metadata:
+  name: local
+spec:
+  # Every published artifact lives under this registry prefix:
+  #   applications/<name>:<version>   ApplicationDefinitions
+  #   suites/<name>:<version>         TestSuites (journey code + fixtures)
+  #   charts/<chart>:<version>        supported Helm charts
+  #   <image>:<tag>                   short image names in definitions, e.g. checkout:0.3.0
+  registry: localhost:5001/performance
+  # Plain HTTP is allowed only for a loopback development registry.
+  plainHttp: true
+  # Which cluster runs the tests (created by platform/setup-local.sh). Paths are relative to
+  # the repository root. --kubeconfig / --context on the command line override these.
+  cluster:
+    kubeconfig: .runtime/performance-test/kubeconfig
+    context: kind-performance-test
+  # Load generator image that runs every TestSuite.
+  runnerImage: python-suite:0.3.0
+  databases:
+    postgres:
+      '17.6': postgres:17.6
+  services:
+    # Demo shortcut: the payment stub is a module of the sample Checkout image.
+    payment-stub: checkout:0.3.0

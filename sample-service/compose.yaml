@@ -1,0 +1,43 @@
+services:
+  database:
+    image: postgres:17.6
+    environment:
+      POSTGRES_DB: checkout
+      POSTGRES_USER: checkout
+      POSTGRES_PASSWORD: local-synthetic-only
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U checkout -d checkout']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  prepare:
+    build: .
+    command: [python, -m, checkout.database, --seed]
+    environment:
+      DATABASE_URL: postgresql://checkout:local-synthetic-only@database:5432/checkout
+    depends_on:
+      database:
+        condition: service_healthy
+  payments:
+    build: .
+    command: [gunicorn, --bind, '0.0.0.0:8080', --workers, '2', --threads, '4', 'checkout.payments:app']
+    environment:
+      PAYMENT_DELAY_MS: ${PAYMENT_DELAY_MS:-50}
+      PAYMENT_OUTCOME: ${PAYMENT_OUTCOME:-approved}
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://checkout:local-synthetic-only@database:5432/checkout
+      PAYMENT_BASE_URL: http://payments:8080
+      PAYMENT_TIMEOUT_MS: '1000'
+    ports: ['127.0.0.1:18080:8080']
+    depends_on:
+      prepare:
+        condition: service_completed_successfully
+      payments:
+        condition: service_started
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8080/readyz', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 30

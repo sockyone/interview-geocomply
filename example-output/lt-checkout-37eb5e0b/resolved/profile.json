@@ -1,0 +1,57 @@
+{
+  "apiVersion": "perf-runner/v1alpha1",
+  "kind": "LoadProfile",
+  "metadata": {
+    "name": "checkout"
+  },
+  "spec": {
+    "model": "closed-users",
+    "flow": [
+      {
+        "journey": "browse",
+        "repeat": 3
+      },
+      {
+        "waitSeconds": 2
+      },
+      {
+        "journey": "purchase"
+      }
+    ],
+    "spawnRate": 5,
+    "drainTimeoutSeconds": 5,
+    "stages": [
+      {
+        "name": "ramp-up",
+        "transition": "ramp",
+        "durationSeconds": 10,
+        "users": 10,
+        "measure": false
+      },
+      {
+        "name": "steady",
+        "transition": "hold",
+        "durationSeconds": 30,
+        "users": 10,
+        "measure": true
+      }
+    ],
+    "thresholds": [
+      {
+        "scope": "measured",
+        "metric": "journeyP95Ms",
+        "max": 2000
+      },
+      {
+        "scope": "steady",
+        "metric": "journeyFailureRatio",
+        "max": 0
+      },
+      {
+        "scope": "measured",
+        "metric": "httpFailureRatio",
+        "max": 0
+      }
+    ]
+  }
+}

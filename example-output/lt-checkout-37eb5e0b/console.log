@@ -1,0 +1,99 @@
+Validating definition: LoadTestDefinitions/checkout.yaml
+17:51:35Z +    0.0s INFO  [run] Run lt-checkout-37eb5e0b | definition checkout | context kind-performance-test
+17:51:35Z +    0.0s INFO  [run] Namespace: lt-checkout-37eb5e0b; evidence: .runtime/runs/lt-checkout-37eb5e0b
+17:51:35Z +    0.0s INFO  [validate] [1/11] Checking Kubernetes access
+17:51:35Z +    0.1s INFO  [validate] [1/11] Checking Kubernetes access — done (0.1s)
+17:51:35Z +    0.1s INFO  [resolve] [2/11] Resolving and validating artifacts
+17:51:35Z +    0.1s INFO  [resolve] Fetching application definition 'checkout': localhost:5001/performance/applications/checkout:latest
+17:51:35Z +    0.2s INFO  [resolve] Downloading and validating the Helm chart: localhost:5001/performance/charts/http-service:0.1.0
+17:51:35Z +    0.3s INFO  [resolve] Resolving application image: localhost:5001/performance/checkout:0.3.0
+17:51:35Z +    0.4s INFO  [resolve] Resolving database image: localhost:5001/performance/postgres:17.6
+17:51:35Z +    0.4s INFO  [resolve] Fetching user journeys and fixtures; validating without executing user code
+17:51:35Z +    0.4s INFO  [resolve] Fetching test suite 'checkout': localhost:5001/performance/suites/checkout:latest
+17:51:35Z +    0.4s INFO  [resolve] Resolving suiteRuntime image: localhost:5001/performance/python-suite:0.3.0
+17:51:35Z +    0.4s INFO  [resolve] Rendering application and service configuration; checking bindings and load settings
+17:51:35Z +    0.5s INFO  [resolve] Checking every Pod against the platform resource limits
+17:51:35Z +    0.5s INFO  [resolve] Resource plan: 5 Pods, limits 4500m CPU / 1536Mi (namespace allows 8 CPU / 8Gi)
+17:51:35Z +    0.5s INFO  [resolve] Resolved 8 artifact roles to immutable digests
+17:51:35Z +    0.5s INFO  [resolve] [2/11] Resolving and validating artifacts — done (0.4s)
+17:51:35Z +    0.5s INFO  [namespace] [3/11] Creating an isolated namespace
+17:51:36Z +    0.7s INFO  [namespace] Guardrails applied: LimitRange/run-limits, ResourceQuota/run-quota, NetworkPolicy/default-deny, NetworkPolicy/allow-same-namespace, NetworkPolicy/allow-dns, NetworkPolicy/allow-monitoring-scrape
+17:51:36Z +    0.7s INFO  [namespace] [3/11] Creating an isolated namespace — done (0.2s)
+17:51:36Z +    0.7s INFO  [database] [4/11] Starting PostgreSQL and preparing seed data
+17:51:36Z +    0.8s INFO  [database] Creating disposable PostgreSQL storage, Service and generated credential Secret
+17:51:36Z +    1.0s INFO  [database] Waiting for PostgreSQL readiness (up to 150s)
+17:51:37Z +    2.4s INFO  [database] PostgreSQL is ready and has ready Service endpoints
+17:51:37Z +    2.4s INFO  [database] Starting seed Job: checkout.database (deadline 60s; no retries)
+17:51:38Z +    2.6s INFO  [database] Job database-seed: Pending, wait-for-database: PodInitializing, seed: PodInitializing
+17:51:38Z +    3.2s INFO  [database] Job database-seed: Pending, wait-for-database: running, seed: PodInitializing
+17:51:39Z +    3.8s INFO  [database] Job database-seed: Running, wait-for-database: exit 0, seed: running
+17:51:40Z +    5.0s INFO  [database] Job database-seed: Running, wait-for-database: exit 0, seed: exit 0
+17:51:40Z +    5.6s INFO  [database] Job database-seed: complete (CompletionsReached)
+17:51:41Z +    5.7s INFO  [database] Seed Job complete: CompletionsReached
+17:51:41Z +    5.7s INFO  [database] [4/11] Starting PostgreSQL and preparing seed data — done (5.0s)
+17:51:41Z +    5.7s INFO  [services] [5/11] Deploying supporting services
+17:51:41Z +    5.8s INFO  [services] payments: rendering the resolved chart
+17:51:41Z +    5.8s INFO  [services] payments: installing release and waiting for ready replicas (up to 180s)
+17:51:42Z +    7.5s INFO  [services] payments: deployment ready, service port 8080
+17:51:42Z +    7.5s INFO  [services] [5/11] Deploying supporting services — done (1.8s)
+17:51:42Z +    7.5s INFO  [application] [6/11] Deploying application and waiting for readiness
+17:51:43Z +    7.6s INFO  [application] application: rendering the resolved chart
+17:51:43Z +    7.7s INFO  [application] application: installing release and waiting for ready replicas (up to 180s)
+17:51:44Z +    8.6s INFO  [application] application: deployment ready, service port 8080
+17:51:44Z +    8.6s INFO  [application] Application ready at http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080
+17:51:44Z +    8.6s INFO  [application] [6/11] Deploying application and waiting for readiness — done (1.1s)
+17:51:44Z +    8.6s INFO  [suite] [7/11] Running the workload
+17:51:44Z +    8.7s INFO  [suite] Starting suite Job: 40s schedule, 115s outer deadline; no retries
+17:51:44Z +    8.8s INFO  [suite] Job suite: Pending, wait-for-application: PodInitializing, suite: PodInitializing
+17:51:44Z +    9.5s INFO  [suite] Job suite: Pending, wait-for-application: running, suite: PodInitializing
+17:51:46Z +   10.7s INFO  [suite] Job suite: Running, wait-for-application: exit 0, suite: running
+17:51:47Z +   12.5s INFO  [suite] Stage ramp-up: 0/40s workload | users 0/1 target | journeys 0 | failed 0 | warmup / excluded
+17:51:51Z +   16.1s INFO  [suite] Stage ramp-up: 5/40s workload | users 6/7 target | journeys 34 | failed 0 | warmup / excluded
+17:51:57Z +   22.1s INFO  [suite] [7/11] Running the workload — still working (13s in this step)
+17:51:57Z +   22.2s INFO  [suite] Stage steady: 10/40s workload | users 10/10 target | journeys 118 | failed 0 | measured
+17:52:01Z +   25.8s INFO  [suite] Stage steady: 15/40s workload | users 10/10 target | journeys 222 | failed 0 | measured
+17:52:06Z +   31.1s INFO  [suite] [7/11] Running the workload — still working (22s in this step)
+17:52:07Z +   32.5s INFO  [suite] Stage steady: 20/40s workload | users 10/10 target | journeys 318 | failed 0 | measured
+17:52:11Z +   36.1s INFO  [suite] Stage steady: 25/40s workload | users 10/10 target | journeys 400 | failed 0 | measured
+17:52:16Z +   41.1s INFO  [suite] [7/11] Running the workload — still working (33s in this step)
+17:52:18Z +   43.3s INFO  [suite] Stage steady: 30/40s workload | users 10/10 target | journeys 502 | failed 0 | measured
+17:52:21Z +   46.3s INFO  [suite] Stage steady: 35/40s workload | users 10/10 target | journeys 598 | failed 0 | measured
+17:52:27Z +   51.7s INFO  [suite] Job suite: Running, wait-for-application: exit 0, suite: exit 0
+17:52:28Z +   52.9s INFO  [suite] Job suite: Succeeded, wait-for-application: exit 0, suite: exit 0
+17:52:28Z +   52.9s INFO  [suite] Stopping new journeys; draining in-flight work
+17:52:28Z +   52.9s INFO  [suite] Runner finished: passed
+17:52:29Z +   54.1s INFO  [suite] Job suite: complete (CompletionsReached)
+17:52:29Z +   54.3s INFO  [suite] Workload finished: execution=completed, performance=passed
+17:52:29Z +   54.3s INFO  [suite] Threshold measured/journeyP95Ms: passed (actual=110, max=2000, samples=560)
+17:52:29Z +   54.3s INFO  [suite] Threshold steady/journeyFailureRatio: passed (actual=0.0, max=0, samples=560)
+17:52:29Z +   54.3s INFO  [suite] Threshold measured/httpFailureRatio: passed (actual=0.0, max=0, samples=980)
+17:52:29Z +   54.3s INFO  [suite] [7/11] Running the workload — done (45.7s)
+17:52:29Z +   54.3s INFO  [collect] [8/11] Collecting diagnostics
+17:52:30Z +   54.6s INFO  [collect] Diagnostics collection: ok
+17:52:30Z +   54.6s INFO  [collect] [8/11] Collecting diagnostics — done (0.3s)
+17:52:30Z +   54.6s INFO  [cleanup] [9/11] Removing run resources
+17:52:35Z +   60.2s INFO  [cleanup] [9/11] Removing run resources — still working (6s in this step)
+17:52:40Z +   65.2s INFO  [cleanup] [9/11] Removing run resources — still working (11s in this step)
+17:52:40Z +   65.2s INFO  [cleanup] Namespace cleanup: ok
+17:52:40Z +   65.2s INFO  [cleanup] [9/11] Removing run resources — done (10.6s)
+17:52:40Z +   65.2s INFO  [metrics] [10/11] Exporting resource metrics
+17:52:45Z +   70.3s INFO  [metrics] Resource metrics available
+17:52:45Z +   70.3s INFO  [metrics] [10/11] Exporting resource metrics — done (5.1s)
+17:52:45Z +   70.3s INFO  [report] [11/11] Writing the result and report
+17:52:46Z +   70.8s INFO  [report] [11/11] Writing the result and report — done (0.5s)
+17:52:46Z +   70.8s INFO  [run] PASSED | execution=completed | performance=passed | cleanup=ok | exit=0
+17:52:46Z +   70.8s INFO  [run] Report: .runtime/runs/lt-checkout-37eb5e0b/report.md; record: .runtime/runs/lt-checkout-37eb5e0b/run.json
+Record: .runtime/runs/lt-checkout-37eb5e0b/run.json
+{
+  "runId": "lt-checkout-37eb5e0b",
+  "status": "passed",
+  "outcome": {
+    "test": "passed",
+    "execution": "completed",
+    "performance": "passed",
+    "collection": "ok",
+    "cleanup": "ok"
+  },
+  "exitCode": 0,
+  "errors": []
+}

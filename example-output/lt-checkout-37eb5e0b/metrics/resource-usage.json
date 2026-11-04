@@ -1,0 +1,87 @@
+{
+  "available": true,
+  "source": "prometheus",
+  "window": {
+    "start": "2026-11-05T00:51:35.946424+07:00",
+    "end": "2026-11-05T00:52:45.620578+07:00"
+  },
+  "namespace": "lt-checkout-37eb5e0b",
+  "roles": {
+    "application": {
+      "pods": [
+        "application-http-service-b5cf75d4d-hkg69"
+      ],
+      "cpuCores": {
+        "samples": 3,
+        "peak": 0.10623072080688661,
+        "mean": 0.09487489549033357
+      },
+      "memoryBytes": {
+        "samples": 4,
+        "peak": 78327808.0,
+        "mean": 60684288.0
+      }
+    },
+    "database": {
+      "pods": [
+        "database-6b95dc4648-gfjqz"
+      ],
+      "cpuCores": {
+        "samples": 3,
+        "peak": 0.10230144220805348,
+        "mean": 0.08961105376383825
+      },
+      "memoryBytes": {
+        "samples": 4,
+        "peak": 26931200.0,
+        "mean": 19493888.0
+      }
+    },
+    "generator": {
+      "pods": [
+        "suite-fx4c4"
+      ],
+      "cpuCores": {
+        "samples": 2,
+        "peak": 0.03328702754555666,
+        "mean": 0.029658077458187118
+      },
+      "memoryBytes": {
+        "samples": 3,
+        "peak": 43261952.0,
+        "mean": 33812480.0
+      }
+    },
+    "seed": {
+      "pods": [
+        "database-seed-7hcn7"
+      ],
+      "cpuCores": null,
+      "memoryBytes": {
+        "samples": 1,
+        "peak": 3117056.0,
+        "mean": 3117056.0
+      }
+    },
+    "service:payments": {
+      "pods": [
+        "payments-http-service-b4c857bdd-fpqqg"
+      ],
+      "cpuCores": {
+        "samples": 2,
+        "peak": 0.016066185871168037,
+        "mean": 0.010761480723023954
+      },
+      "memoryBytes": {
+        "samples": 3,
+        "peak": 55427072.0,
+        "mean": 42145109.333333336
+      }
+    }
+  },
+  "missingRoles": [],
+  "notes": [
+    "CPU is the rate between consecutive samples (cAdvisor refreshes about every 15 s); memory is working set. Values are totals across a role's containers.",
+    "Pods shorter than one scrape interval, and the final seconds before export, may have no samples."
+  ]
+}

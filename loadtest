@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Run the load-testing CLI from the repository root, e.g.:
+#   ./loadtest run LoadTestDefinitions/checkout.yaml
+# The CLI is installed by `bash platform/setup-local.sh` into .runtime/perf-runner.
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
+if [[ ! -x .runtime/perf-runner/bin/loadtest ]]; then
+  echo 'The loadtest CLI is not installed yet. Run once:  bash platform/setup-local.sh' >&2
+  exit 2
+fi
+exec .runtime/perf-runner/bin/loadtest "$@"

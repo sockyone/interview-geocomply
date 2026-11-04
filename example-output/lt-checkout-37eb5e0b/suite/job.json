@@ -1,0 +1,203 @@
+{
+    "apiVersion": "batch/v1",
+    "kind": "Job",
+    "metadata": {
+        "creationTimestamp": "2026-11-04T17:51:44Z",
+        "generation": 1,
+        "labels": {
+            "perf-runner/role": "suite",
+            "perf-runner/run-id": "lt-checkout-37eb5e0b"
+        },
+        "name": "suite",
+        "namespace": "lt-checkout-37eb5e0b",
+        "resourceVersion": "391762",
+        "uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+    },
+    "spec": {
+        "activeDeadlineSeconds": 115,
+        "backoffLimit": 0,
+        "completionMode": "NonIndexed",
+        "completions": 1,
+        "manualSelector": false,
+        "parallelism": 1,
+        "podReplacementPolicy": "TerminatingOrFailed",
+        "selector": {
+            "matchLabels": {
+                "batch.kubernetes.io/controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729"
+            }
+        },
+        "suspend": false,
+        "template": {
+            "metadata": {
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                    "batch.kubernetes.io/job-name": "suite",
+                    "controller-uid": "f3f89e03-e3f0-44ba-a013-1d06f8bef729",
+                    "job-name": "suite",
+                    "perf-runner/role": "suite",
+                    "perf-runner/run-id": "lt-checkout-37eb5e0b"
+                }
+            },
+            "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                    {
+                        "args": [
+                            "--suite",
+                            "/suite-input/suite.yaml",
+                            "--profile",
+                            "/profile/profile.yaml",
+                            "--result",
+                            "/results/result.json",
+                            "--print-result",
+                            "--request-timeout",
+                            "3"
+                        ],
+                        "env": [
+                            {
+                                "name": "BASE_URL",
+                                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080"
+                            },
+                            {
+                                "name": "RUN_ID",
+                                "value": "lt-checkout-37eb5e0b"
+                            },
+                            {
+                                "name": "PERF_RUN_PROGRESS",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "suite",
+                        "resources": {
+                            "limits": {
+                                "cpu": "1",
+                                "memory": "256Mi"
+                            },
+                            "requests": {
+                                "cpu": "200m",
+                                "memory": "256Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/suite-input",
+                                "name": "user-flows",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/profile",
+                                "name": "profile",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "initContainers": [
+                    {
+                        "command": [
+                            "python",
+                            "-c",
+                            "import os,time,urllib.request\nurl = os.environ['READY_URL']\ndeadline = time.monotonic() + 30\nwhile True:\n    try:\n        with urllib.request.urlopen(url, timeout=1) as response:\n            assert response.status == 200\n        break\n    except OSError:\n        if time.monotonic() \u003e= deadline:\n            raise\n        time.sleep(.2)\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "READY_URL",
+                                "value": "http://application-http-service.lt-checkout-37eb5e0b.svc.cluster.local:8080/readyz"
+                            }
+                        ],
+                        "image": "localhost:5001/performance/python-suite@sha256:bc1bb4d2b401aebb9ac37d8ec5ba295b67b6e239c5b3326a8a2fc9f9a389da36",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "wait-for-application",
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "allowPrivilegeEscalation": false,
+                            "capabilities": {
+                                "drop": [
+                                    "ALL"
+                                ]
+                            },
+                            "runAsNonRoot": true,
+                            "seccompProfile": {
+                                "type": "RuntimeDefault"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "restartPolicy": "Never",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "terminationGracePeriodSeconds": 30,
+                "volumes": [
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "checkout-scripts-871a615fd5b3"
+                        },
+                        "name": "user-flows"
+                    },
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "load-profile"
+                        },
+                        "name": "profile"
+                    }
+                ]
+            }
+        }
+    },
+    "status": {
+        "completionTime": "2026-11-04T17:52:28Z",
+        "conditions": [
+            {
+                "lastProbeTime": "2026-11-04T17:52:28Z",
+                "lastTransitionTime": "2026-11-04T17:52:28Z",
+                "message": "Reached expected number of succeeded pods",
+                "reason": "CompletionsReached",
+                "status": "True",
+                "type": "SuccessCriteriaMet"
+            },
+            {
+                "lastProbeTime": "2026-11-04T17:52:28Z",
+                "lastTransitionTime": "2026-11-04T17:52:28Z",
+                "message": "Reached expected number of succeeded pods",
+                "reason": "CompletionsReached",
+                "status": "True",
+                "type": "Complete"
+            }
+        ],
+        "ready": 0,
+        "startTime": "2026-11-04T17:51:44Z",
+        "succeeded": 1,
+        "terminating": 0,
+        "uncountedTerminatedPods": {}
+    }
+}

@@ -1,0 +1,64 @@
+# LoadTestDefinition: everything about one test — what to deploy, the user journeys, and the load.
+# Run:  ./loadtest run LoadTestDefinitions/checkout.yaml ...
+# Things are referred to by name (name or name:version). The platform knows where they are
+# published; every run records the exact versions (digests) it used.
+apiVersion: perf-runner/v1alpha1
+kind: LoadTestDefinition
+metadata:
+  name: checkout
+spec:
+  # The application under test: the name of its ApplicationDefinition
+  # (ApplicationDefinitions/checkout.yaml). Add :version to pin one, e.g. checkout:0.3.0.
+  application:
+    definition: checkout
+    # Environment variable -> generated run output (credentials stay in a run-owned Secret).
+    bindings:
+      DATABASE_URL: database.url
+      PAYMENT_BASE_URL: services.payments.url
+  # A fresh database per run (the platform supplies the engine), seeded by a Job that runs
+  # a module from the application image (set seed.image to use a separate setup image).
+  database:
+    type: postgres
+    version: '17.6'
+    name: checkout
+    readinessTimeoutSeconds: 150
+    seed:
+      module: checkout.database
+      args: [--seed-file, fixtures/products.csv]
+      bindings:
+        DATABASE_URL: database.url
+      timeoutSeconds: 60
+  # Supporting services deployed before the application (stubs are supplied by the platform).
+  services:
+    payments:
+      type: payment-stub
+      delayMs: 50
+      outcome: approved
+  # The name of the TestSuite with the user journeys (TestSuites/checkout/suite.yaml).
+  suite: checkout
+  # The load: what every simulated user does, how many users, and what counts as a pass.
+  # Journey names below are the ones declared in that suite.
+  load:
+    flow:                              # every user repeats these steps, in order
+      - {journey: browse, repeat: 3}   # view 3 product pages
+      - {waitSeconds: 2}               # think for 2 seconds
+      - {journey: purchase}            # create, update, pay and verify an order
+    spawnRate: 5                       # users added per second while ramping
+    drainTimeoutSeconds: 5             # time for in-flight journeys to finish at the end
+    stages:                            # how many users, over time
+      - {name: ramp-up, transition: ramp, durationSeconds: 10, users: 10, measure: false}
+      - {name: steady, transition: hold, durationSeconds: 30, users: 10, measure: true}
+    thresholds:                        # pass/fail limits, over measured stages
+      - {scope: measured, metric: journeyP95Ms, max: 2000}
+      - {scope: steady, metric: journeyFailureRatio, max: 0}
+      - {scope: measured, metric: httpFailureRatio, max: 0}
+  execution:
+    requestTimeoutSeconds: 3
+    applicationReadinessTimeoutSeconds: 180
+    jobStartupAllowanceSeconds: 60
+    resources:
+      requests: {cpu: 200m, memory: 256Mi}
+      limits: {cpu: '1', memory: 256Mi}
+  cleanup:
+    policy: always
+    timeoutSeconds: 120
